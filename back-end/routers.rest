@@ -1,0 +1,14 @@
+
+GET http://localhost:3000/
+
+###
+
+GET http://localhost:3000/getMemberId
+
+###
+
+GET http://localhost:3000/getMemberId/M123
+
+###
+
+GET http://localhost:3000/collections
