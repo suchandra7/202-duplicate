@@ -31,13 +31,13 @@ function Login() {
         <div className='grid'>
             <div className='g-col-6'>
                 <form>
-                <div class="mb-3">
+                <div className="mb-3">
                         <label htmlFor="exampleInputuserID" className="form-label">User ID </label>
-                        <input type="text" min="4" class="form-control" id="userID" value={userID} onChange = {(e) => handleInputChange(e)} />
+                        <input type="text" min="4" className="form-control" id="userID" value={userID} onChange = {(e) => handleInputChange(e)} />
                     </div>
-                    <div class="mb-3">
+                    <div className="mb-3">
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input type="password" min="4" class="form-control" id="password" value={password} onChange = {(e) => handleInputChange(e)} />
+                        <input type="password" min="4" className="form-control" id="password" value={password} onChange = {(e) => handleInputChange(e)} />
                     </div>
                    
                     <button onClick={()=>handleSubmit()} type="submit" className="btn btn-primary">Submit</button>

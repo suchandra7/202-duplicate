@@ -26,7 +26,7 @@ function Register() {
 
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
         var user_details = { userId: userID, name: name, email: email, password: password }
         axios.post("http://localhost:3000/addUser", user_details).then((response) => {
             alert('registered successfully');
@@ -35,27 +35,31 @@ function Register() {
     };
 
     return (
-
-        <form>
-            <div class="mb-3">
+        <div className='row'>
+          <div className='col-6 offset-3'>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
                 <label htmlFor="exampleInputuserID" className="form-label">User ID </label>
-                <input type="text" min="4" class="form-control" id="userID" value={userID} onChange={(e) => handleInputChange(e)} />
+                <input type="text" min="4" className="form-control" id="userID" value={userID} onChange={(e) => handleInputChange(e)} />
             </div>
-            <div class="mb-3">
+            <div className="mb-3">
                 <label htmlFor="exampleInputName" className="form-label">Full Name</label>
-                <input type="text" min="4" class="form-control" id="name" value={name} onChange={(e) => handleInputChange(e)} />
+                <input type="text" min="4" className="form-control" id="name" value={name} onChange={(e) => handleInputChange(e)} />
             </div>
-            <div class="mb-3">
+            <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                <input type="email" min="4" class="form-control" id="email" value={email} onChange={(e) => handleInputChange(e)} />
+                <input type="email" min="4" className="form-control" id="email" value={email} onChange={(e) => handleInputChange(e)} />
             </div>
-            <div class="mb-3">
+            <div className="mb-3">
                 <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                <input type="password" min="4" class="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} />
+                <input type="password" min="4" className="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} />
             </div>
 
-            <button onClick={() => handleSubmit()} type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary">Submit</button>
         </form>
+          </div>
+        </div>
+
 
     )
 }
