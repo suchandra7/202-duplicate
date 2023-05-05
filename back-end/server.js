@@ -11,19 +11,23 @@ const Class = require('./model/classModel')
 const Booking = require('./model/bookingModel')
 const LogMachineTracking = require('./model/logMachineTrackingModel')
 const CheckInNOut = require('./model/checkInNOutModel')
+const cors = require("cors")
 app.use(express.json())
 
 require('dotenv').config();
 
-// function modifyUserdata(){
+app.use(
+  cors({
+    origin : "*",
+  })
+)
 
-// }
 
 app.listen(port, () => {
   console.log(`Gym Management app is running on ${port}`)
 })
 
-mongoose.connect(process.env.DB_URL)
+mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.mongodb.net/Gym_Management?retryWrites=true&w=majority")
   .then(() => {
 
     app.get('/', (req, res) => {
