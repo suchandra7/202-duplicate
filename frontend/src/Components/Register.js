@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+
+    const navigate = useNavigate();
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -26,13 +29,17 @@ function Register() {
 
     }
 
-    const handleSubmit = (event) => {
+    async function handleSubmit(event) {
+        event.preventDefault();
         var user_details = { userId: userID, name: name, email: email, password: password }
-        axios.post("http://localhost:3000/addUser", user_details).then((response) => {
-            alert('registered successfully');
-            console.log(response);
-        });
-    };
+        try {
+          const response = await axios.post('http://localhost:3000/addUser', user_details);
+          console.log('registeration successful!', response.data);
+          navigate('/login');
+        } catch (error) {
+          console.error('registeration failed!', error.response.data);
+        }
+      };
 
     return (
         <div className='row'>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
+    const navigate = useNavigate();
 
     const [password,setPassword] = useState('');
     const [userID,setuserID] = useState('');
@@ -19,18 +21,23 @@ function Login() {
 
     }
     
-    const handleSubmit = () => {
+    async function handleSubmit(event) {
+        event.preventDefault();
         var user_details = { userId : userID, password : password} 
-        axios.post("http://localhost:3000/login",user_details).then((response)=>{
-            alert('registered successfully');
-            console.log(response);
-        });
-    };
+        try {
+          const response = await axios.post('http://localhost:3000/user/validate', user_details);
+          console.log('login successful!', response.data);
+          navigate('/profile');
+        } catch (error) {
+          console.error('login failed!', error.response.data);
+        }
+      };
+
 
     return (
         <div className='grid'>
             <div className='g-col-6'>
-                <form>
+                <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                         <label htmlFor="exampleInputuserID" className="form-label">User ID </label>
                         <input type="text" min="4" className="form-control" id="userID" value={userID} onChange = {(e) => handleInputChange(e)} />
@@ -40,7 +47,7 @@ function Login() {
                         <input type="password" min="4" className="form-control" id="password" value={password} onChange = {(e) => handleInputChange(e)} />
                     </div>
                    
-                    <button onClick={()=>handleSubmit()} type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
