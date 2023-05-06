@@ -33,7 +33,7 @@ function Header() {
                             :
                             (guserRole == 'admin' ? <React.Fragment>
                                 <li className="nav-item">
-                                    <Link className="nav-link" >Enroll users</Link>
+                                    <Link className="nav-link" to="/enrollusers">Enroll users</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" >Check in</Link>

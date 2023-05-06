@@ -7,6 +7,7 @@ import Home from './Components/Home';
 import Profile from './Components/Profile';
 import Activity from './Components/Activity';
 import Signupforclass from './Components/Signupforclass';
+import Enrollusers from './Components/Enrollusers';
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from './context/AuthProvider';
 import { useState } from 'react';
@@ -31,6 +32,7 @@ function App() {
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/activity" element={<Activity />} />
           <Route exact path="/signupforclass" element={<Signupforclass />} />
+          <Route exact path="/enrollusers" element={<Enrollusers />} />
         </Routes>
       </div>
     </div>
