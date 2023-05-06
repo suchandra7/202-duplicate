@@ -12,6 +12,7 @@ import { Routes, Route } from "react-router-dom";
 import { AuthContext } from './context/AuthProvider';
 import { useState } from 'react';
 import "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js";
+import Nonmember from './Components/Nonmember';
 
 function App() {
   const [guserID, setguserID] = useState('');
@@ -33,6 +34,7 @@ function App() {
           <Route exact path="/activity" element={<Activity />} />
           <Route exact path="/signupforclass" element={<Signupforclass />} />
           <Route exact path="/enrollusers" element={<Enrollusers />} />
+          <Route exact path="/nonmember" element={<Nonmember />} />
         </Routes>
       </div>
     </div>

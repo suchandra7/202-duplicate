@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../context/AuthProvider';
 
 function Register() {
-
+    const { guserID, setguserID } = useContext(AuthContext);
+    const { guserRole, setguserRole } = useContext(AuthContext);
+    const { guserEmail, setguserEmail } = useContext(AuthContext);
+    const { guserName, setguserName } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [name, setName] = useState('');
@@ -11,9 +15,14 @@ function Register() {
     const [password, setPassword] = useState('');
     const [userID, setuserID] = useState('');
 
+    useEffect(() => {
+        if(guserID==''){
+            navigate('/login');
+        }
+    }, [guserID]);
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
-
         if (id === "name") {
             setName(value);
         }
@@ -26,7 +35,6 @@ function Register() {
         if (id === "password") {
             setPassword(value);
         }
-
     }
 
     async function handleSubmit(event) {

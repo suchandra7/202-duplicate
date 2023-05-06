@@ -14,6 +14,15 @@ function Login() {
     const [password, setPassword] = useState('');
     const [userID, setuserID] = useState('');
 
+    useEffect(() => {
+        if(guserRole == 'Member'){
+            navigate('/profile');
+        }
+        else if(guserRole == 'admin'){
+            navigate('/');
+        }
+    }, [guserRole]);
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "userID") {
@@ -34,8 +43,15 @@ function Login() {
             setguserRole(response.data.role);
             setguserEmail(response.data.email);
             setguserName(response.data.name);
-            navigate('/profile');
-
+            if(guserRole == 'Member'){
+                navigate('/profile');
+            }
+            else if(guserRole == 'admin'){
+                navigate('/');
+            }
+            else{
+                navigate('/nonmember');
+            }
         } catch (error) {
             console.error('login failed!', error.response.data);
         }

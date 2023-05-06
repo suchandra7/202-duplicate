@@ -1,10 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import { AuthContext } from '../context/AuthProvider';
 import { useNavigate } from "react-router-dom";
 
-
-function Profile() {
+function Nonmember() {
     const { guserID, setguserID } = useContext(AuthContext);
     const { guserRole, setguserRole } = useContext(AuthContext);
     const { guserEmail, setguserEmail } = useContext(AuthContext);
@@ -19,13 +17,21 @@ function Profile() {
     
     return (
         <div>
-            <div>{guserID}</div>
-            <div>{guserRole}</div>
-            <div>{guserEmail}</div>
-            <div>{guserName}</div>
+            <div className='row center'>
+            <h1>
+                Only members have full access to our website.
+            </h1>
+            </div>
+            <div className='row center'>
+                <p>
+                Please visit the homepage to view membership details
+                 and take membership to be able to get access to our features like
+                 booking classes, viewiing activity etc.
+                </p>
+            </div>
         </div>
 
     )
 }
 
-export default Profile;
+export default Nonmember;
