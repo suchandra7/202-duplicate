@@ -179,6 +179,30 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+    // make non-member user as member 
+    app.patch('/user/updateUserMembership/',async(req,res)=>{
+      try {
+        const userId = req.body.userId
+        const months = req.body.months
+        const startDate = new Date();
+        const endDate = new Date(startDate.getTime());
+        endDate.setMonth(startDate.getMonth() + months);
+        const user = await User.findOne( { userId : userId} )
+        console.log(startDate)
+        console.log(endDate)
+        if(!user){
+          return res.status(404).json({ message: 'User not found' });
+        }
+        user.role = "Member"
+        user.membershipStartDate = startDate
+        user.membershipEndDate = endDate
+        await user.save();
+        res.status(200).json({ success: true, message: 'User record updated & successfully made as member.' })
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
 
     // ------------------------------- Admin specific endpoints -----------------------------------
 
@@ -347,7 +371,9 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
-    // return future classes of a user
+
+
+      // return future classes (one week) of a user
     app.get('/futureClass/:uId', async ( req,res)=>{
       try {
         const userId = req.params.uId
@@ -371,14 +397,17 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         console.log("class ids lenght")
         console.log(classIds.length)
         const promises = [];
+        const currentDate = new Date();
+        const nextWeek = new Date();
+        nextWeek.setDate(nextWeek.getDate() + 7);
         classIds.forEach( (classId) => {
           // const classe = await Class.findOne( { classId : classId })
           const promise = Class.findOne( { classId : classId }).then( (classe)=>{
             console.log("inside this");
             console.log(classe.classId);
-            classesInfoJSc.classesJson.push( { className: activityMap.get(classe.activityId), classId :classe.classId, location : classe.location, startTime: classe.startTime, endTime : classe.endTime, instructor : classe.instructor })
-            
-            
+            if (currentDate <= classe.startTime && classe.startTime <= nextWeek) {
+              classesInfoJSc.classesJson.push( { className: activityMap.get(classe.activityId), classId :classe.classId, location : classe.location, startTime: classe.startTime, endTime : classe.endTime, instructor : classe.instructor })
+            }
           }).catch((err)=>{
             console.log(err)
           });
@@ -662,6 +691,38 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+    //gets a specific checkInNOut based on _id
+
+    //null api --> db.collection.find({ column: { $type: 10 } })
+
+    //update checkin time
+    app.post('/updateCheckIn/:uId', async(req,res)=>{
+      try {
+        const userId = req.params.uId;
+        const checkInNOut = await CheckInNOut.create({userId : userId,  checkInTime : new Date()})
+        res.status(200).json(checkInNOut)
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
+    //updates only specific row of user wheere checkin in present and check out is not present
+    app.patch('/updateCheckOut/:uId', async(req,res)=>{
+      try {
+        const userId = req.params.uId
+        CheckInNOut.findOne( {userId : userId, checkOutTime : {  $exists: false  } } ).then( checkInNOutUser => {
+          console.log(checkInNOutUser.checkInId)
+          checkInNOutUser.checkOutTime = new Date();
+          checkInNOutUser.save();
+          res.status(200).json({ success: true, message: 'Check out time updated successfully.' })
+        })
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
      // ------------------------------- MembershipPlan specific endpoints -----------------------------------
 
     // add membership 
@@ -703,6 +764,8 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         res.status(500).json({message: error.message})
       }
     })
+
+    
 
   }
   ).catch((error)=>console.log("db connection error"+error));

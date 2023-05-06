@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const checkInNOutSchema = mongoose.Schema(
     {
         userId : { type : String, require : true},
-        checkInId : { type : String},
+        checkInId : { type : Number},
         checkInTime : { type : Date},
         checkOutTime : { type : Date}
     },
