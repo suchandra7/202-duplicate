@@ -42,8 +42,8 @@ function Login() {
     };
 
     return (
-        <div className='grid'>
-            <div className='g-col-6'>
+        <div className='row'>
+            <div className='col-6 offset-3'>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="exampleInputuserID" className="form-label">User ID </label>
