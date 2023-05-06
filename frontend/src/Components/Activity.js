@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { Container } from 'react-bootstrap';
 
 function Activity() {
-    return (
-        <div className = "row">
-        <table class="table">
+  return (
+    <div className="row">
+      <table class="table">
         <thead class="table-dark">
           <tr>
             <th scope="col">#</th>
@@ -35,8 +34,8 @@ function Activity() {
           </tr>
         </tbody>
       </table>
-      </div>
-    )
+    </div>
+  )
 }
 
 export default Activity;
