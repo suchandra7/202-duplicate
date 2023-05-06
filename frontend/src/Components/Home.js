@@ -92,8 +92,8 @@ function Home() {
                     Types of classes available
                 </h1>
             </div>
-            <div className='row'>
-                <div className='col-3'>
+            <div className='row memberships'>
+                <div className='col-2'>
                     <div class="card actvity">
                         <img src={a1} class="card-img-bottom" alt="..." />
                         <div class="card-body">
@@ -102,38 +102,38 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div className='col-3'>
+                <div className='col-2'>
                     <div class="card actvity">
                         <img src={a2} class="card-img-bottom" alt="..." />
                         <div class="card-body">
-                            <h5 class="card-title">Boxing</h5>
+                            <h5 class="card-title">Cardio</h5>
                             <p class="card-text">Best boxing class in town</p>
                         </div>
                     </div>
                 </div>
-                <div className='col-3'>
+                <div className='col-2'>
                     <div class="card actvity">
                         <img src={a3} class="card-img-bottom" alt="..." />
                         <div class="card-body">
-                            <h5 class="card-title">Boxing</h5>
+                            <h5 class="card-title">Strength</h5>
                             <p class="card-text">Best boxing class in town</p>
                         </div>
                     </div>
                 </div>
-                <div className='col-3'>
+                <div className='col-2'>
                     <div class="card actvity">
                         <img src={a4} class="card-img-bottom" alt="..." />
                         <div class="card-body">
-                            <h5 class="card-title">Boxing</h5>
+                            <h5 class="card-title">Yoga</h5>
                             <p class="card-text">Best boxing class in town</p>
                         </div>
                     </div>
                 </div>
-                <div className='col-3'>
+                <div className='col-2'>
                     <div class="card actvity">
                         <img src={a5} class="card-img-bottom" alt="..." />
                         <div class="card-body">
-                            <h5 class="card-title">Boxing</h5>
+                            <h5 class="card-title">Zumba</h5>
                             <p class="card-text">Best boxing class in town</p>
                         </div>
                     </div>
