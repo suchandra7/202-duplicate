@@ -30,6 +30,8 @@ app.listen(port, () => {
 mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.mongodb.net/Gym_Management?retryWrites=true&w=majority")
   .then(() => {
 
+    const jwt = require('jsonwebtoken');
+
     app.get('/', (req, res) => {
       res.send('Hello suchi!')
     })
@@ -112,7 +114,24 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
           return res.status(401).json({ login: false} )
         }
         if( user.userId == givenUserId && user.password == givenPassword){
-          res.status(200).json( {login: true} )
+          // const accessToken = jwt.sign(
+          //   {
+          //     "username" : user.userId,
+          //     "test":"test"
+          //   },
+          //   process.env.ACCESS_TOKEN_SECRET,
+          //   { expiresIn: '1h'}
+          // );
+          // const refreshToken = jwt.sign(
+          //   {
+          //     "username" : user.userId,
+          //   },
+          //   process.env.REFRESH_TOKEN_SECRET,
+          //   { expiresIn: '1d'}
+          // );
+          // res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
+
+          res.status(200).json( {userId : user.userId, role : user.role, email : user.email, name : user.name} );
         }else{
           res.status(401).json({ login: false} )
         }

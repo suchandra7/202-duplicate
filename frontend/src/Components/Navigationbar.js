@@ -1,6 +1,18 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthProvider';
+
 function Header() {
+    const { guserID, setguserID } = useContext(AuthContext);
+    const { guserRole, setguserRole } = useContext(AuthContext);
+    const { guserEmail, setguserEmail } = useContext(AuthContext);
+    const { guserName, setguserName } = useContext(AuthContext);
+    const logout = () =>{
+        setguserID('');
+        setguserRole('');
+        setguserEmail('');
+        setguserName('');
+    }
     return (
         <nav className="navbar navbar-expand-lg bg-dark bg-body-tertiary" data-bs-theme="dark">
             <div className="container-fluid">
@@ -19,9 +31,11 @@ function Header() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/register">Register</Link>
                         </li>
-                        <li className="nav-item">
+                        {guserID == '' ? <li className="nav-item">
                             <Link className="nav-link" to="/login">Login</Link>
-                        </li>
+                        </li> : <li className="nav-item">
+                            <Link className="nav-link" onClick={logout}>Logout</Link>
+                        </li>}
                     </ul>
                 </div>
             </div>
