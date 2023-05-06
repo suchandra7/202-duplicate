@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import img1 from '../images/1.jpg';
 import img2 from '../images/2.jpg';
 import img3 from '../images/3.jpg';
 import a1 from '../images/a1.jpg';
-
-
+import a2 from '../images/cardio.jpg';
+import a3 from '../images/strength.jpg';
+import a4 from '../images/yoga.jpg';
+import a5 from '../images/zumba.jpg';
 
 function Home() {
+    const [membershipPlans,setmembershipPlans] = useState({});
+
+    async function getMembership(event) {
+        // event.preventDefault();
+        try {
+            const response = await axios.get('http://localhost:3000/membershipPlan');
+            console.log(response.data);
+            setmembershipPlans(response.data);
+        } catch (error) {
+            console.error('Error fetching data', error.response.data);
+        }
+    };
+
+    useEffect(() => {
+        getMembership();
+      }, []);
 
     return (
         <div >
@@ -36,9 +54,11 @@ function Home() {
                     <div class="card text-bg-dark">
                         <img className='membership-card' src={img1} class="card-img" alt="..." />
                         <div class="card-img-overlay">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                            <h5 class="card-title">3 Month plan</h5>
+                            <p class="card-text">
+                            Kick-start your fitness journey with our new gym's 3-month basic plan, offering access to all facilities and equipment to help you get in shape and feel great.
+                            </p>
+                            <p class="card-text"><big>$90</big></p>
                         </div>
                     </div>
                 </div>
@@ -46,9 +66,11 @@ function Home() {
                     <div class="card text-bg-dark">
                         <img src={img2} class="card-img" alt="..." />
                         <div class="card-img-overlay">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                            <h5 class="card-title">6 Month plan</h5>
+                            <p class="card-text">
+                            Commit to your fitness journey with our discounted 6-month Basic Plan, offering access to all state-of-the-art gym equipment and facilities.
+                            </p>
+                            <p class="card-text"><big>$175</big></p>
                         </div>
                     </div>
                 </div>
@@ -56,9 +78,11 @@ function Home() {
                     <div class="card text-bg-dark">
                         <img src={img3} class="card-img" alt="..." />
                         <div class="card-img-overlay">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small>Last updated 3 mins ago</small></p>
+                            <h5 class="card-title">12 Month plan</h5>
+                            <p class="card-text">
+                            Commit to your fitness journey and receive personalized support from experienced trainers and nutritionists, plus access to state-of-the-art gym facilities.
+                            </p>
+                            <p class="card-text"><big>$250</big></p>
                         </div>
                     </div>
                 </div>
@@ -80,7 +104,34 @@ function Home() {
                 </div>
                 <div className='col-3'>
                     <div class="card actvity">
-                        <img src={a1} class="card-img-bottom" alt="..." />
+                        <img src={a2} class="card-img-bottom" alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">Boxing</h5>
+                            <p class="card-text">Best boxing class in town</p>
+                        </div>
+                    </div>
+                </div>
+                <div className='col-3'>
+                    <div class="card actvity">
+                        <img src={a3} class="card-img-bottom" alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">Boxing</h5>
+                            <p class="card-text">Best boxing class in town</p>
+                        </div>
+                    </div>
+                </div>
+                <div className='col-3'>
+                    <div class="card actvity">
+                        <img src={a4} class="card-img-bottom" alt="..." />
+                        <div class="card-body">
+                            <h5 class="card-title">Boxing</h5>
+                            <p class="card-text">Best boxing class in town</p>
+                        </div>
+                    </div>
+                </div>
+                <div className='col-3'>
+                    <div class="card actvity">
+                        <img src={a5} class="card-img-bottom" alt="..." />
                         <div class="card-body">
                             <h5 class="card-title">Boxing</h5>
                             <p class="card-text">Best boxing class in town</p>
