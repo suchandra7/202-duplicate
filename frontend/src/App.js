@@ -5,9 +5,12 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import Home from './Components/Home';
 import Profile from './Components/Profile';
+import Activity from './Components/Activity';
+import Signupforclass from './Components/Signupforclass';
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from './context/AuthProvider';
 import { useState } from 'react';
+import "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js";
 
 function App() {
   const [guserID, setguserID] = useState('');
@@ -26,6 +29,8 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/activity" element={<Activity />} />
+          <Route exact path="/signupforclass" element={<Signupforclass />} />
         </Routes>
       </div>
     </div>

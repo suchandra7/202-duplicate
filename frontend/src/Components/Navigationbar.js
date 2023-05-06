@@ -52,10 +52,10 @@ function Header() {
                                     <Link className="nav-link" >My classes</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" >View activites</Link>
+                                    <Link className="nav-link" to="/activity">View activites</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" >Book class</Link>
+                                    <Link className="nav-link" to="/signupforclass">Book class</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" >Log hours</Link>
