@@ -3,9 +3,14 @@ import axios from 'axios';
 
 function Home() {
 
-
     return (
-        <div> Home
+        <div >
+            <div className='row'>
+                <h1>Avilable memberships</h1>
+            </div>
+            <div className='row'>
+                
+            </div>
         </div>
 
     )
