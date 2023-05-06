@@ -347,6 +347,63 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+    // return future classes of a user
+    app.get('/futureClass/:uId', async ( req,res)=>{
+      try {
+        const userId = req.params.uId
+        const bookings = await Booking.find( { userId : userId})
+        const classIds = [];
+        bookings.forEach(booking => {
+          classIds.push(booking.classId)
+        });
+        //hard coded need to change if we change activities in DB
+        const activityMap = new Map();
+        activityMap.set("1","thread_mill")
+        activityMap.set("2","cross fit")
+        activityMap.set("3","cross ramp")
+        activityMap.set("4","Boxing")
+        activityMap.set("5","Dance")
+        activityMap.set("6","Yoga")
+        const classesInfoJSc = { classesJson: [] }
+        console.log(typeof classesInfoJSc);
+        // const classesInfoJSc = JSON.parse(JSON.stringify(classesInfo));
+        // const classe = await Class.findOne( { classId : "101" })
+        console.log("class ids lenght")
+        console.log(classIds.length)
+        const promises = [];
+        classIds.forEach( (classId) => {
+          // const classe = await Class.findOne( { classId : classId })
+          const promise = Class.findOne( { classId : classId }).then( (classe)=>{
+            console.log("inside this");
+            console.log(classe.classId);
+            classesInfoJSc.classesJson.push( { className: activityMap.get(classe.activityId), classId :classe.classId, location : classe.location, startTime: classe.startTime, endTime : classe.endTime, instructor : classe.instructor })
+            
+            
+          }).catch((err)=>{
+            console.log(err)
+          });
+          // console.log(classe); // printing as expected
+          promises.push(promise)
+        })
+        
+        Promise.all(promises).then(() => {
+          console.log("length");
+          console.log(classesInfoJSc.classesJson.length);
+          classesInfoJSc.classesJson.forEach((c)=>{
+            console.log("here")
+            console.log(c);
+            // Activity.findOne({activityId : c.activityId })
+          })
+          res.status(200).json(classesInfoJSc.classesJson)
+        }).catch((err) => {
+          console.log(err);
+        });
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
     // gets all classes information
     app.get('/class',async(req,res)=>{
       try {
