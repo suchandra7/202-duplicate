@@ -11,6 +11,8 @@ const Class = require('./model/classModel')
 const Booking = require('./model/bookingModel')
 const LogMachineTracking = require('./model/logMachineTrackingModel')
 const CheckInNOut = require('./model/checkInNOutModel')
+const MembershipPlan = require('./model/membershipPlan')
+
 const cors = require("cors")
 app.use(express.json())
 
@@ -29,8 +31,6 @@ app.listen(port, () => {
 
 mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.mongodb.net/Gym_Management?retryWrites=true&w=majority")
   .then(() => {
-
-    const jwt = require('jsonwebtoken');
 
     app.get('/', (req, res) => {
       res.send('Hello suchi!')
@@ -114,22 +114,6 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
           return res.status(401).json({ login: false} )
         }
         if( user.userId == givenUserId && user.password == givenPassword){
-          // const accessToken = jwt.sign(
-          //   {
-          //     "username" : user.userId,
-          //     "test":"test"
-          //   },
-          //   process.env.ACCESS_TOKEN_SECRET,
-          //   { expiresIn: '1h'}
-          // );
-          // const refreshToken = jwt.sign(
-          //   {
-          //     "username" : user.userId,
-          //   },
-          //   process.env.REFRESH_TOKEN_SECRET,
-          //   { expiresIn: '1d'}
-          // );
-          // res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
 
           res.status(200).json( {userId : user.userId, role : user.role, email : user.email, name : user.name} );
         }else{
@@ -141,30 +125,6 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
-    // make non-member user as member 
-    app.patch('/user/updateUserMembership/',async(req,res)=>{
-      try {
-        const userId = req.body.userId
-        const months = req.body.months
-        const startDate = new Date();
-        const endDate = new Date(startDate.getTime());
-        endDate.setMonth(startDate.getMonth() + months);
-        const user = await User.findOne( { userId : userId} )
-        console.log(startDate)
-        console.log(endDate)
-        if(!user){
-          return res.status(404).json({ message: 'User not found' });
-        }
-        user.role = "Member"
-        user.membershipStartDate = startDate
-        user.membershipEndDate = endDate
-        await user.save();
-        res.status(200).json({ success: true, message: 'User record updated & successfully made as member.' })
-      } catch (error) {
-        console.log(error)
-        res.status(500).json({message: error.message})
-      }
-    })
 
     // gets all users information
     app.get('/user',async(req,res)=>{
@@ -218,6 +178,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         res.status(500).json({message: error.message})
       }
     })
+
 
     // ------------------------------- Admin specific endpoints -----------------------------------
 
@@ -644,6 +605,47 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+     // ------------------------------- MembershipPlan specific endpoints -----------------------------------
+
+    // add membership 
+    app.post('/addMembershipPlan',async(req,res)=>{
+      try {
+        const mambershipPlan = await MembershipPlan.create(req.body)
+        res.status(200).json(mambershipPlan)
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
+    // gets membership plan based on months provided in the url
+    app.get('/membershipPlan/:months',async(req,res)=>{
+      try {
+        const months = req.params.months
+        const membershipPlan = await MembershipPlan.findOne( { noOfMonths : months} )
+        if(!membershipPlan){
+          res.status(404).json( { message: "membership plan with given months not present"})
+        }
+        res.status(200).json(membershipPlan)
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
+    // gets all membership plans
+    app.get('/membershipPlan',async(req,res)=>{
+      try {
+        const membershipPlan = await MembershipPlan.find({})
+        if(!membershipPlan){
+          res.status(404).json( { message: "membership plan with given months not present"})
+        }
+        res.status(200).json(membershipPlan)
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
 
   }
   ).catch((error)=>console.log("db connection error"+error));
