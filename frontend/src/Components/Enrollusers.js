@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import axios from 'axios';
 function Enrollusers() {
+    const navigate = useNavigate();
+
     const [selectedV, setselectedV] = useState();
     const [selectedV1, setselectedV1] = useState();
     const { guserRole, setguserRole } = useContext(AuthContext);
-    const navigate = useNavigate();
+    const [selectedV2, setselectedV2] = useState();
 
     async function getMembers(){
         try{
-            const response = await axios.get('http://localhost:3000/user');
+            const response = await axios.get('http://localhost:3000/getnonmembers');
             console.log(response.data);
             setselectedV(response.data);
         }
@@ -30,30 +32,41 @@ function Enrollusers() {
         }
     }, [guserRole]);
 
+    async function enrollMembers(event){
+        try{
+            var details = {userId: selectedV2, months:selectedV1}
+            const response = await axios.patch('http://localhost:3000/user/updateUserMembership', details);
+            console.log(response.data);
+            navigate('/enrollusers');
+        }
+        catch(error){
+            console.error('Enrollment unsuccessful', error.response.data);
+        }
+    }
     useEffect(() => {
        getMembers();
     }, []);
 
-    //const options = [];
-    //for (let i=0; i <=selectedV.length; i +=1) options.push(i);
-
     return (
         <div className='row'>
-            <div className='col-3'>
-                Members <select>
-                <option>
-          </option>
+            <div className='col'>
+                Members <select onChange={e => setselectedV2(e.target.value)}>
+                <option value="none" selected disabled hidden>
+                    </option>
+                {selectedV?.map(selectedValue => <option>{selectedValue.userId}</option>)}
                 </select>
             </div>
-            <div className='col-3'>
-                Time Period <select value={selectedV1} onChange={e => setselectedV1(e.target.value)}>
+            <div className='col'>
+                Time Period in Months <select value={selectedV1} onChange={e => setselectedV1(e.target.value)}>
                     <option value="none" selected disabled hidden>
                     </option>
-                    <option></option>
+                    <option>3</option>
+                    <option>6</option>
+                    <option>12</option>
                 </select>
             </div>
-            <div className='col-3'>
-            <button type="button" class="btn btn-success">Enroll</button>
+            <div className='col'>
+            <button type="button" class="btn btn-success" onClick={enrollMembers}>Enroll</button>
             </div>
         </div> 
     )
