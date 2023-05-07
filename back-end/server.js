@@ -167,6 +167,17 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+    //get only non members
+    app.get('/getnonmembers',async(req,res)=>{
+      try {
+        const users = await User.find({role: "Non Member"})
+        res.status(200).json(users)
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
     //gets a specific user based on _id
     app.get('/user/:id',async(req,res)=>{
       try {
@@ -508,7 +519,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         // const classesInfoJSc = JSON.parse(JSON.stringify(classesInfo));
         // const classe = await Class.findOne( { classId : "101" })
         console.log("class ids lenght")
-        console.log(classIds.length)
+        // console.log(classIds.length)
         const promises = [];
         const currentDate = new Date();
         const nextWeek = new Date();
