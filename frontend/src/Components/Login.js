@@ -16,10 +16,16 @@ function Login() {
 
     useEffect(() => {
         if(guserRole == 'Member'){
-            navigate('/profile');
+            console.log('logged in as member');
+            navigate('/activity');
         }
         else if(guserRole == 'admin'){
-            navigate('/');
+            console.log('logged in as admin');
+            navigate('/enrollusers');
+        }
+        else if(guserRole == 'Non Member'){
+            console.log('logged in as Non-member');
+            navigate('/nonmember');
         }
     }, [guserRole]);
 
@@ -44,12 +50,15 @@ function Login() {
             setguserEmail(response.data.email);
             setguserName(response.data.name);
             if(guserRole == 'Member'){
-                navigate('/profile');
+                console.log('logged in as member');
+                navigate('/activity');
             }
             else if(guserRole == 'admin'){
-                navigate('/');
+                console.log('logged in as admin');
+                navigate('/enrollusers');
             }
-            else{
+            else if(guserRole == 'Non Member'){
+                console.log('logged in as Non-member');
                 navigate('/nonmember');
             }
         } catch (error) {

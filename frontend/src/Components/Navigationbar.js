@@ -47,23 +47,28 @@ function Header() {
                                 <li className="nav-item">
                                     <Link className="nav-link" onClick={logout}>Logout</Link>
                                 </li>
-                            </React.Fragment> : <React.Fragment>
-                                <li className="nav-item">
-                                    <Link className="nav-link" >My classes</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/activity">View activites</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/signupforclass">Book class</Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" >Log hours</Link>
-                                </li>
+                            </React.Fragment> : (guserRole == 'Member' ?
+                                <React.Fragment>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" >My classes</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/activity">View activites</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/signupforclass">Book class</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" >Log hours</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" onClick={logout}>Logout</Link>
+                                    </li>
+                                </React.Fragment> :
                                 <li className="nav-item">
                                     <Link className="nav-link" onClick={logout}>Logout</Link>
                                 </li>
-                            </React.Fragment>
+                            )
                             )}
                     </ul>
                 </div>

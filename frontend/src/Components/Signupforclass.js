@@ -1,8 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../context/AuthProvider';
+
 
 function Signupforclass() {
     const [selectedValue, setselectedValue] = useState();
+    const { guserRole, setguserRole } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(guserRole == ''){
+            navigate('/');
+        }
+        else if(guserRole == 'admin'){
+            navigate('/enrollusers');
+        }
+        else if(guserRole == 'Non Member'){
+            navigate('/nonmember');
+        }
+    }, [guserRole]);
+
     return (
         <div>
         <div className='row'>

@@ -16,7 +16,8 @@ function Register() {
     const [userID, setuserID] = useState('');
 
     useEffect(() => {
-        if(guserID==''){
+        if(guserID!=''){
+            console.log('already logged in');
             navigate('/login');
         }
     }, [guserID]);

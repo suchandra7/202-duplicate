@@ -9,15 +9,20 @@ function Activity() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(guserID==''){
-      navigate('/login');
-  }
-  },[guserID]);
+    if(guserRole == ''){
+        navigate('/');
+    }
+    else if(guserRole == 'admin'){
+        navigate('/enrollusers');
+    }
+    else if(guserRole == 'Non Member'){
+        navigate('/nonmember');
+    }
+}, [guserRole]);
 
   return (
     <div>
       <div className='row center'>
-       
       </div>
       <div className="row">
         <table class="table">

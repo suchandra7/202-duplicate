@@ -13,10 +13,8 @@ function Home() {
     const [membershipPlans,setmembershipPlans] = useState({});
 
     async function getMembership(event) {
-        // event.preventDefault();
         try {
             const response = await axios.get('http://localhost:3000/membershipPlan');
-            console.log(response.data);
             setmembershipPlans(response.data);
         } catch (error) {
             console.error('Error fetching data', error.response.data);
