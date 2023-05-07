@@ -3,38 +3,41 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import axios from 'axios';
 function Enrollusers() {
+
+    const [selectedMember, setselectedMember] = useState('Select a member');
+    const [selectedDuration, setselectedDuration] = useState('Select a duration');
+    const [members, setMembers] = useState();
     const navigate = useNavigate();
 
-    const [selectedV, setselectedV] = useState();
-    const [selectedV1, setselectedV1] = useState();
     const { guserRole, setguserRole } = useContext(AuthContext);
     const [selectedV2, setselectedV2] = useState();
 
-    async function getMembers(){
-        try{
+    async function getMembers() {
+        try {
+
             const response = await axios.get('http://localhost:3000/getnonmembers');
             console.log(response.data);
-            setselectedV(response.data);
+            setMembers(response.data);
         }
-        catch{
+        catch {
             console.error('get members failed');
         }
     }
     useEffect(() => {
-        if(guserRole == ''){
+        if (guserRole == '') {
             navigate('/');
         }
-        else if(guserRole == 'member'){
+        else if (guserRole == 'member') {
             navigate('/member');
         }
-        else if(guserRole == 'Non Member'){
+        else if (guserRole == 'Non Member') {
             navigate('/nonmember');
         }
     }, [guserRole]);
 
     async function enrollMembers(event){
         try{
-            var details = {userId: selectedV2, months:selectedV1}
+            var details = {userId: selectedMember, months:selectedDuration}
             const response = await axios.patch('http://localhost:3000/user/updateUserMembership', details);
             console.log(response.data);
             navigate('/enrollusers');
@@ -44,31 +47,61 @@ function Enrollusers() {
         }
     }
     useEffect(() => {
-       getMembers();
+        getMembers();
     }, []);
+
+    const setMember = (e) => {
+        const target = e.target;
+        if (target.classList.contains('dropdown-item')) {
+            setselectedMember(target.innerText);
+        }
+    }
+    const setDuration = (e) => {
+        const target = e.target;
+        if (target.classList.contains('dropdown-item')) {
+            setselectedDuration(target.innerText);
+        }
+    }
 
     return (
         <div className='row'>
-            <div className='col'>
-                Members <select onChange={e => setselectedV2(e.target.value)}>
-                <option value="none" selected disabled hidden>
-                    </option>
-                {selectedV?.map(selectedValue => <option>{selectedValue.userId}</option>)}
-                </select>
+            <div className='enroll'>
+                <div className='center side'>
+                    <h3> Member</h3>
+                    <div class="dropdown" onClick={setMember}>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {selectedMember}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" >Mountain View</a></li>
+                            <li><a class="dropdown-item" >Sunyvale</a></li>
+                            <li><a class="dropdown-item" >Milpitas</a></li>
+                            <li><a class="dropdown-item" >San jose</a></li>
+                            <li><a class="dropdown-item" >Santa clara</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className='center side'>
+                    <h3>Duration</h3>
+                    <div class="dropdown" onClick={setDuration}>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {selectedDuration}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" >3 </a></li>
+                            <li><a class="dropdown-item" >6</a></li>
+                            <li><a class="dropdown-item" >12</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="button" class="btn btn-success">Enroll</button>
+                </div>
             </div>
-            <div className='col'>
-                Time Period in Months <select value={selectedV1} onChange={e => setselectedV1(e.target.value)}>
-                    <option value="none" selected disabled hidden>
-                    </option>
-                    <option>3</option>
-                    <option>6</option>
-                    <option>12</option>
-                </select>
-            </div>
-            <div className='col'>
-            <button type="button" class="btn btn-success" onClick={enrollMembers}>Enroll</button>
-            </div>
-        </div> 
+
+        </div>
     )
 }
 

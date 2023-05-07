@@ -20,6 +20,15 @@ function Activity() {
     }
 }, [guserRole]);
 
+ const getActivities = () => {
+
+ }
+ 
+useEffect(() => {
+  getActivities();
+}, []);
+
+
   return (
     <div>
       <div className='row center'>
