@@ -16,11 +16,19 @@ function Register() {
     const [userID, setuserID] = useState('');
 
     useEffect(() => {
-        if(guserID!=''){
-            console.log('already logged in');
-            navigate('/login');
+        if(guserRole == 'Member'){
+            console.log('logged in as member');
+            navigate('/activity');
         }
-    }, [guserID]);
+        else if(guserRole == 'admin'){
+            console.log('logged in as admin');
+            navigate('/enrollusers');
+        }
+        else if(guserRole == 'Non Member'){
+            console.log('logged in as Non-member');
+            navigate('/nonmember');
+        }
+    }, []);
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -53,6 +61,9 @@ function Register() {
     return (
         <div className='row'>
           <div className='col-6 offset-3'>
+            <div>
+                {guserRole}
+            </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="exampleInputuserID" className="form-label">User ID </label>
