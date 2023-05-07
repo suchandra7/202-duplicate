@@ -6,11 +6,10 @@ const API = 'http://localhost:3000/futureClass/';
 
 
 const Schedule = () => {
-    const [users, setUsers] = useState([]);
+    const [bookings, setBookings] = useState([]);
     const { guserID, setguserID } = useContext(AuthContext);
     const { guserRole, setguserRole } = useContext(AuthContext);
-    const { guserEmail, setguserEmail } = useContext(AuthContext);
-    const { guserName, setguserName } = useContext(AuthContext);
+
     const navigate = useNavigate();
     const [data, setdata] = useState([]);
     const [scheduleData, setscheduleData] = useState({
@@ -38,7 +37,10 @@ const Schedule = () => {
         try {
             fetch(API + guserID)
                 .then((response) => response.json())
-                .then((json) => setUsers(json))
+                .then((json) => {
+                    setBookings(json);
+                    console.log(json);
+                })
         }
 
         catch {
@@ -47,18 +49,12 @@ const Schedule = () => {
     }
 
     useEffect(() => {
-        if (guserID == '') {
-            navigate('/login');
-
-        }
-        else {
             fetchUsers();
-        }
-    }, [guserID]);
+    }, []);
     return (
         <div>
             <div class="row center">
-                <h1>Future Bookings </h1>
+                <h1>My class schedule</h1>
                 <div className='row'>
                     <table class="table table-hover">
                         <thead class="table-dark">
@@ -73,7 +69,7 @@ const Schedule = () => {
                         </thead>
                         <tbody>
                             {
-                                users.map(currSchedule => (
+                                bookings.map(currSchedule => (
                                     <tr>
                                         <td>{currSchedule.className}</td>
                                         <td>{currSchedule.location}</td>

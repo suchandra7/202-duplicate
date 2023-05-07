@@ -20,3 +20,9 @@
 .margin-tops{
   margin-top: 20px;
 }
+
+.side{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

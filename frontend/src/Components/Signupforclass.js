@@ -1,41 +1,69 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
-
+import axios from 'axios';
 
 function Signupforclass() {
-    const [selectedValue, setselectedValue] = useState();
+    const [selectedValue, setselectedValue] = useState('Select a location');
     const { guserRole, setguserRole } = useContext(AuthContext);
+    const [classes, setClasses] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(guserRole == ''){
+        if (guserRole == '') {
             navigate('/');
         }
-        else if(guserRole == 'admin'){
+        else if (guserRole == 'admin') {
             navigate('/enrollusers');
         }
-        else if(guserRole == 'Non Member'){
+        else if (guserRole == 'Non Member') {
             navigate('/nonmember');
         }
     }, [guserRole]);
 
+    async function getClasses(event) {
+        try {
+            const response = await axios.get('http://localhost:3000/class');
+            setClasses(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error('Error fetching data', error.response.data);
+        }
+    };
+
+    useEffect(() => {
+        getClasses();
+    }, []);
+
+    const setValue = (e) => {
+            const target = e.target;
+            if (target.classList.contains('dropdown-item')) {
+              setselectedValue(target.innerText);
+            }
+    }
+
     return (
         <div>
-        <div className='row'>
-            <div className='col'>
-                Location <select value={selectedValue} onChange={e => setselectedValue(e.target.value)}>
-                    <option value="none" selected disabled hidden>
-                    </option>
-                    <option>San jose</option>
-                    <option>Santa Clara</option>
-                    <option>Milpitas</option>
-                    <option>Sunyvale</option>
-                    <option>Mountain View</option>
-                </select>
-            </div>
             <div className='row'>
-            <table class="table">
+                <div className='center side'>
+                    <h3>Seleced location</h3>
+                    <div class="dropdown" onClick={setValue}>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {selectedValue}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" >Mountain View</a></li>
+                            <li><a class="dropdown-item" >Sunyvale</a></li>
+                            <li><a class="dropdown-item" >Milpitas</a></li>
+                            <li><a class="dropdown-item" >San jose</a></li>
+                            <li><a class="dropdown-item" >Santa clara</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div className='row'>
+                <table class="table">
                     <thead class="table-dark">
                         <tr>
                             <th scope="col">Class</th>
@@ -80,12 +108,11 @@ function Signupforclass() {
                         </tr>
                     </tbody>
                 </table>
-                </div>
-        </div>
+            </div>
         </div>
 
-       
-                
+
+
     )
 }
 
