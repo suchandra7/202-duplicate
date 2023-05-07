@@ -24,6 +24,36 @@ app.use(
   })
 )
 
+//hard coded need to change if we change activities in DB
+const activityMap = new Map();
+activityMap.set("1","thread_mill")
+activityMap.set("2","cross fit")
+activityMap.set("3","cross ramp")
+activityMap.set("4","Boxing")
+activityMap.set("5","Dance")
+activityMap.set("6","Yoga")
+
+const caloriesMap = new Map();
+caloriesMap.set("1",258)
+caloriesMap.set("2",460)
+caloriesMap.set("3",390)
+caloriesMap.set("4",800)
+caloriesMap.set("5",300)
+caloriesMap.set("6",180)
+
+const machineSet = new Set();
+machineSet.add('thread mill')
+machineSet.add('cross fit')
+machineSet.add('cross ramp')
+machineSet.add('excercise bike')
+machineSet.add('rowing machine')
+
+const machineCaloriesMap = new Map();
+machineCaloriesMap.set("thread mill",258)
+machineCaloriesMap.set("cross fit",460)
+machineCaloriesMap.set("cross ramp",390)
+machineCaloriesMap.set("excercise bike",500)
+machineCaloriesMap.set("rowing machine",600)
 
 app.listen(port, () => {
   console.log(`Gym Management app is running on ${port}`)
@@ -371,9 +401,99 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+    // return activity to hours for a single user in the given date time range
+    app.get('/activityHoursSpent', async(req,res)=>{
+      try {
+        const userId = req.body.userId
+        const startDate = new Date(req.body.startDate)// need to check if i get a data object or just in string format
+        const endDate = new Date(req.body.endDate)
+        const bookings = await Booking.find( { userId : userId})
+        const classIds = [];
+        const response = { resJson : [] }
+        bookings.forEach(booking => {
+          classIds.push(booking.classId)
+        });
+        console.log("classes");
+        console.log(classIds)
+        // classIds.forEach( (classId)=>{
+        //   console.log(classIds)
+        // })
+        const promises = []
+        activityMap.forEach( ( activityName, activityId)  =>{
+          let activityCount = 0
+          classIds.forEach( (classId)=>{
+            // console.log({ activityId : activityId , classId : classId})
+            const promise = Class.findOne ( { activityId : activityId , classId : classId} ).then( (docs)=>{
+              if(docs){
+              if( docs.startTime >=startDate && docs.endTime <= endDate ){
+                  activityCount=activityCount+ (docs.endTime-docs.startTime)/(1000 * 60 * 60);
+                  // const hoursDifference = differenceMs / (1000 * 60 * 60);
+              } 
+            }
+            })
+            promises.push(promise)
+          })
+          Promise.all(promises).then(() => {
+            console.log("answers")
+            console.log({activityName : activityName, activityCount: activityCount});
+            response.resJson.push( {activityName : activityName, activityHours: activityCount, caloriesBurnt : activityCount*caloriesMap.get(activityId)} )
+          })
+        })
+        Promise.all(promises).then(() => {
+          res.status(200).json(response.resJson);
+        })
+        
+        // res.status(200).json(response.resJson);
+          // setTimeout(() => {
+          //   res.status(200).json(response.resJson);
+          // }, 3000);
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
 
+    //machine hours spent
+    app.get('/machineHoursSpent', async(req,res)=>{
+        const userId = req.body.userId
+        const startDate = new Date(req.body.startDate)// need to check if i get a data object or just in string format
+        const endDate = new Date(req.body.endDate)
+        const machineToHourMap = new Map()
+        const promises = []
+        machineSet.forEach((machine)=>{
+          const promise = LogMachineTracking.find({userId: userId , machineName: machine}).then((logMachinetracking)=>{
+            logMachinetracking.forEach((logMachine)=>{
+              // console.log(type(logMachine.startTime),type(startDate))
+              // console.log(logMachine.endTime,endDate)
+              if( (logMachine.startTime >= startDate && logMachine.endTime <= endDate)){
+                if( machineToHourMap.has(logMachine.machineName) ){
+                  const hrs = machineToHourMap.get(logMachine.machineName) +  (logMachine.endTime-logMachine.startTime)/(1000 * 60 * 60)
+                  machineToHourMap.set(logMachine.machineName,hrs) 
+                }else{
+                  const ihrs =  (logMachine.endTime-logMachine.startTime)/(1000 * 60 * 60)
+                  machineToHourMap.set(logMachine.machineName,ihrs) 
+                  // console.log(machineToHourMap)
+                }
+              }
+            })
+          })
+          promises.push(promise)
+        })
+        Promise.all(promises).then(()=>{
+          // console.log("map")
+          // console.log(machineToHourMap)
+          const result = { resJson : []}
+          machineToHourMap.forEach((Hrs,machineName)=>{
+            const caloriesBurnt = machineCaloriesMap.get(machineName)*Hrs
+            result.resJson.push({ machineName : machineName, hoursSpent : Hrs, caloriesBurnt : caloriesBurnt })
+          })
+          res.status(200).json(result.resJson)
+        })
+        
+        
+    })
 
-      // return future classes (one week) of a user
+    // return future classes (one week) of a user
     app.get('/futureClass/:uId', async ( req,res)=>{
       try {
         const userId = req.params.uId
@@ -382,14 +502,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         bookings.forEach(booking => {
           classIds.push(booking.classId)
         });
-        //hard coded need to change if we change activities in DB
-        const activityMap = new Map();
-        activityMap.set("1","thread_mill")
-        activityMap.set("2","cross fit")
-        activityMap.set("3","cross ramp")
-        activityMap.set("4","Boxing")
-        activityMap.set("5","Dance")
-        activityMap.set("6","Yoga")
+        
         const classesInfoJSc = { classesJson: [] }
         console.log(typeof classesInfoJSc);
         // const classesInfoJSc = JSON.parse(JSON.stringify(classesInfo));
@@ -414,7 +527,6 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
           // console.log(classe); // printing as expected
           promises.push(promise)
         })
-        
         Promise.all(promises).then(() => {
           console.log("length");
           console.log(classesInfoJSc.classesJson.length);
