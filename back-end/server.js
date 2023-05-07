@@ -14,6 +14,10 @@ const CheckInNOut = require('./model/checkInNOutModel')
 const MembershipPlan = require('./model/membershipPlan')
 
 const cors = require("cors")
+const cron = require('node-cron');
+
+// Schedule the cron job to run at midnight every day
+
 app.use(express.json())
 
 require('dotenv').config();
@@ -26,20 +30,18 @@ app.use(
 
 //hard coded need to change if we change activities in DB
 const activityMap = new Map();
-activityMap.set("1","thread_mill")
-activityMap.set("2","cross fit")
-activityMap.set("3","cross ramp")
-activityMap.set("4","Boxing")
-activityMap.set("5","Dance")
-activityMap.set("6","Yoga")
+activityMap.set("1","boxing")
+activityMap.set("2","cardio")
+activityMap.set("3","strength")
+activityMap.set("4","yoga")
+activityMap.set("5","zumba")
 
 const caloriesMap = new Map();
-caloriesMap.set("1",258)
-caloriesMap.set("2",460)
+caloriesMap.set("1",325)
+caloriesMap.set("2",180)
 caloriesMap.set("3",390)
-caloriesMap.set("4",800)
+caloriesMap.set("4",120)
 caloriesMap.set("5",300)
-caloriesMap.set("6",180)
 
 const machineSet = new Set();
 machineSet.add('thread mill')
@@ -62,8 +64,79 @@ app.listen(port, () => {
 mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.mongodb.net/Gym_Management?retryWrites=true&w=majority")
   .then(() => {
 
+    app.post('/createTodaysClasses',async(req,res)=>{
+         // Code to run at the beginning of a new day
+
+        try {
+          console.log("Triggered!!!!!!!");
+          const now = new Date();
+          for (let i = 0; i < 20; i++) {
+            now.setDate(now.getDate() + 1);
+            const todaysDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+            const today7 = new Date(todaysDate.getTime() + 7 * 60 * 60 * 1000);
+            const today8 = new Date(todaysDate.getTime() + 8 * 60 * 60 * 1000);
+            const today9 = new Date(todaysDate.getTime() + 9 * 60 * 60 * 1000);
+            const today10 = new Date(todaysDate.getTime() + 10 * 60 * 60 * 1000);
+            const today11 = new Date(todaysDate.getTime() + 11 * 60 * 60 * 1000);
+            const req1 = { "activityId" : "1", "location" : "San jose", "startTime" : today7, "endTime" : today8,"capacity" : 20, "instructor" : "yogesh" }
+            const req2 = { "activityId" : "2", "location" : "San jose", "startTime" : today8, "endTime" : today9,"capacity" : 20, "instructor" : "Preethi" }
+            const req3 = { "activityId" : "3", "location" : "San jose", "startTime" : today7, "endTime" : today8,"capacity" : 20, "instructor" : "Madhuri" }
+            const req4 = { "activityId" : "4", "location" : "San jose", "startTime" : today10, "endTime" : today11,"capacity" : 20, "instructor" : "Suchandra" }
+            const req13 = { "activityId" : "5", "location" : "San jose", "startTime" : today10, "endTime" : today11,"capacity" : 20, "instructor" : "yogesh" }
+
+            const req5 = { "activityId" : "1", "location" : "Milpitas", "startTime" : today7, "endTime" : today8,"capacity" : 20, "instructor" : "Suchandra" }
+            const req6 = { "activityId" : "2", "location" : "Milpitas", "startTime" : today8, "endTime" : today9,"capacity" : 20, "instructor" : "Srujith" }
+            const req7 = { "activityId" : "3", "location" : "Milpitas", "startTime" : today7, "endTime" : today8,"capacity" : 20, "instructor" : "Nitish" }
+            const req8 = { "activityId" : "4", "location" : "Milpitas", "startTime" : today10, "endTime" : today11,"capacity" : 20, "instructor" : "Saketh" }
+            const req14 = { "activityId" : "5", "location" : "Milpitas", "startTime" : today10, "endTime" : today11,"capacity" : 20, "instructor" : "yogesh" }
+
+            const req9 = { "activityId" : "1", "location" : "Sunnyvale", "startTime" : today7, "endTime" : today8,"capacity" : 20, "instructor" : "Vishal" }
+            const req10 = { "activityId" : "2", "location" : "Sunnyvale", "startTime" : today7, "endTime" : today8,"capacity" : 20, "instructor" : "Srujith" }
+            const req11 = { "activityId" : "3", "location" : "Sunnyvale", "startTime" : today9, "endTime" : today10,"capacity" : 20, "instructor" : "Preethi" }
+            const req12 = { "activityId" : "4", "location" : "Sunnyvale", "startTime" : today10, "endTime" : today11,"capacity" : 20, "instructor" : "Madhuri" }
+            const req15 = { "activityId" : "5", "location" : "Sunnyvale", "startTime" : today10, "endTime" : today11,"capacity" : 20, "instructor" : "Suchandra" }
+
+            const req16 = { "activityId" : "1", "location" : "Mountain View", "startTime" : today7, "endTime" : today8,"capacity" : 10, "instructor" : "satya" }
+            const req17 = { "activityId" : "2", "location" : "Mountain View", "startTime" : today7, "endTime" : today8,"capacity" : 10, "instructor" : "sundar" }
+            const req18 = { "activityId" : "3", "location" : "Mountain View", "startTime" : today9, "endTime" : today10,"capacity" : 10, "instructor" : "Jhon" }
+            const req19 = { "activityId" : "4", "location" : "Mountain View", "startTime" : today10, "endTime" : today11,"capacity" : 10, "instructor" : "satya" }
+            const req20 = { "activityId" : "5", "location" : "Mountain View", "startTime" : today10, "endTime" : today11,"capacity" : 10, "instructor" : "Jhon" }
+
+
+            await Class.create(req1);
+            await Class.create(req2);
+            await Class.create(req3);
+            await Class.create(req4);
+            await Class.create(req5);
+            await Class.create(req6);
+            await Class.create(req7);
+            await Class.create(req8);
+            await Class.create(req9);
+            await Class.create(req10);
+            await Class.create(req11);
+            await Class.create(req12);
+            await Class.create(req13);
+            await Class.create(req14);
+            await Class.create(req15);
+            await Class.create(req16);
+            await Class.create(req17);
+            await Class.create(req18);
+            await Class.create(req19);
+            await Class.create(req20);
+
+          }
+          res.status(200).json( {message: "succesfully created one week classes at all the locations"} );
+          console.log("created one week classes");
+          
+        } catch (error) {
+              console.log(error)
+            res.status(500).json({message: error.message})
+        }
+      
+    })
+
     app.get('/', (req, res) => {
-      res.send('Hello suchi!')
+      res.send('Hello GYM!')
     })
     console.log('Connected!')
 
@@ -229,8 +302,8 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         const endDate = new Date(startDate.getTime());
         endDate.setMonth(startDate.getMonth() + months);
         const user = await User.findOne( { userId : userId} )
-        console.log(startDate)
-        console.log(endDate)
+        // console.log(startDate)
+        // console.log(endDate)
         if(!user){
           return res.status(404).json({ message: 'User not found' });
         }
@@ -424,8 +497,8 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         bookings.forEach(booking => {
           classIds.push(booking.classId)
         });
-        console.log("classes");
-        console.log(classIds)
+        // console.log("classes");
+        // console.log(classIds)
         // classIds.forEach( (classId)=>{
         //   console.log(classIds)
         // })
@@ -445,8 +518,8 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
             promises.push(promise)
           })
           Promise.all(promises).then(() => {
-            console.log("answers")
-            console.log({activityName : activityName, activityCount: activityCount});
+            // console.log("answers")
+            // console.log({activityName : activityName, activityCount: activityCount});
             response.resJson.push( {activityName : activityName, activityHours: activityCount, caloriesBurnt : activityCount*caloriesMap.get(activityId)} )
           })
         })
@@ -504,8 +577,29 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         
     })
 
+    // return future classes (one week) based on location
+    app.get('/futureClasses/:location', async (req,res)=>{
+      try {
+        const location = req.params.location
+        const classes = await Class.find( {location: location } )
+        const response = { jsonres: [] }
+        const currentDate = new Date();
+        const nextWeek = new Date();
+        nextWeek.setDate(nextWeek.getDate() + 7);
+        classes.forEach( (classe)=>{
+          if( classe.startTime >= currentDate && classe.endTime <= nextWeek){
+            response.jsonres.push( {className : activityMap.get(classe.activityId) , startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor} )
+          }
+        })
+        res.status(200).json(response.jsonres)
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
     // return future classes (one week) of a user
-    app.get('/futureClass/:uId', async ( req,res)=>{
+    app.get('/futureClass/:uId', async (req,res)=>{
       try {
         const userId = req.params.uId
         const bookings = await Booking.find( { userId : userId})
@@ -515,10 +609,14 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         });
         
         const classesInfoJSc = { classesJson: [] }
-        console.log(typeof classesInfoJSc);
+        // console.log(typeof classesInfoJSc);
         // const classesInfoJSc = JSON.parse(JSON.stringify(classesInfo));
         // const classe = await Class.findOne( { classId : "101" })
+<<<<<<< Updated upstream
         console.log("class ids lenght")
+=======
+        // console.log("class ids lenght")
+>>>>>>> Stashed changes
         // console.log(classIds.length)
         const promises = [];
         const currentDate = new Date();
@@ -527,10 +625,10 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         classIds.forEach( (classId) => {
           // const classe = await Class.findOne( { classId : classId })
           const promise = Class.findOne( { classId : classId }).then( (classe)=>{
-            console.log("inside this");
-            console.log(classe.classId);
+            if(classe){
             if (currentDate <= classe.startTime && classe.startTime <= nextWeek) {
               classesInfoJSc.classesJson.push( { className: activityMap.get(classe.activityId), classId :classe.classId, location : classe.location, startTime: classe.startTime, endTime : classe.endTime, instructor : classe.instructor })
+            }
             }
           }).catch((err)=>{
             console.log(err)
@@ -539,13 +637,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
           promises.push(promise)
         })
         Promise.all(promises).then(() => {
-          console.log("length");
-          console.log(classesInfoJSc.classesJson.length);
-          classesInfoJSc.classesJson.forEach((c)=>{
-            console.log("here")
-            console.log(c);
-            // Activity.findOne({activityId : c.activityId })
-          })
+          
           res.status(200).json(classesInfoJSc.classesJson)
         }).catch((err) => {
           console.log(err);
@@ -620,6 +712,20 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       } catch (error) {
         console.log(error)
         res.status(500).json({message: error.message})
+      }
+    })
+
+    // to book a class 
+    app.post('/bookClass',async(req,res)=>{
+      try {
+        // const userId = req.body.userId
+        // const classId = req.body.classId
+        const booking = await Booking.create(req.body)
+        res.status(200).json({message:"successfully booked the class"})
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+        
       }
     })
 

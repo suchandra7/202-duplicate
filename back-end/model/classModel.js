@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const classSchema = mongoose.Schema(
     {
         activityId : { type : String, require : true},
-        classId : { type : String, require : true, unique : true},
+        classId : { type : Number },
         location : { type : String, require : true},
         startTime : { type : Date },
         endTime : { type : Date },

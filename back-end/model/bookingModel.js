@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bookingSchema = mongoose.Schema(
     {
         userId : { type : String, require : true },
-        classId : { type : String, require : true },
+        classId : { type : Number , require : true },
         status : { type : String }
     },
     {
