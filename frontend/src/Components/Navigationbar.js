@@ -50,7 +50,7 @@ function Header() {
                             </React.Fragment> : (guserRole == 'Member' ?
                                 <React.Fragment>
                                     <li className="nav-item">
-                                        <Link className="nav-link" >My classes</Link>
+                                        <Link className="nav-link" to="/schedule" >My classes</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-link" to="/activity">View activites</Link>
