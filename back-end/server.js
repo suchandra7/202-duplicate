@@ -612,12 +612,6 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         // console.log(typeof classesInfoJSc);
         // const classesInfoJSc = JSON.parse(JSON.stringify(classesInfo));
         // const classe = await Class.findOne( { classId : "101" })
-<<<<<<< Updated upstream
-        console.log("class ids lenght")
-=======
-        // console.log("class ids lenght")
->>>>>>> Stashed changes
-        // console.log(classIds.length)
         const promises = [];
         const currentDate = new Date();
         const nextWeek = new Date();
