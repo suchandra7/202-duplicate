@@ -17,7 +17,7 @@ function Login() {
     useEffect(() => {
         if(guserRole == 'Member'){
             console.log('logged in as member');
-            navigate('/activity');
+            navigate('/schedule');
         }
         else if(guserRole == 'admin'){
             console.log('logged in as admin');
@@ -51,7 +51,7 @@ function Login() {
             setguserName(response.data.name);
             if(guserRole == 'Member'){
                 console.log('logged in as member');
-                navigate('/activity');
+                navigate('/schedule');
             }
             else if(guserRole == 'admin'){
                 console.log('logged in as admin');

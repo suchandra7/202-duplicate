@@ -36,13 +36,13 @@ function Header() {
                                     <Link className="nav-link" to="/enrollusers">Enroll users</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" >Check in</Link>
+                                    <Link className="nav-link" to="/checkinout">Check in</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" >Free trials</Link>
+                                    <Link className="nav-link" to="/freetrials">Free trials</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" >Dashboard</Link>
+                                    <Link className="nav-link" to="/dashboard">Dashboard</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" onClick={logout}>Logout</Link>
@@ -59,7 +59,7 @@ function Header() {
                                         <Link className="nav-link" to="/signupforclass">Book class</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" >Log hours</Link>
+                                        <Link className="nav-link" to="/loghours">Log hours</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-link" onClick={logout}>Logout</Link>

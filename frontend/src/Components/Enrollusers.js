@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../context/AuthProvider';
 import axios from 'axios';
 function Enrollusers() {
     const [selectedV, setselectedV] = useState();
     const [selectedV1, setselectedV1] = useState();
+    const { guserRole, setguserRole } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     async function getMembers(){
         try{
@@ -15,6 +18,17 @@ function Enrollusers() {
             console.error('get members failed');
         }
     }
+    useEffect(() => {
+        if(guserRole == ''){
+            navigate('/');
+        }
+        else if(guserRole == 'member'){
+            navigate('/member');
+        }
+        else if(guserRole == 'Non Member'){
+            navigate('/nonmember');
+        }
+    }, [guserRole]);
 
     useEffect(() => {
        getMembers();
