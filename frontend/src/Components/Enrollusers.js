@@ -6,23 +6,27 @@ function Enrollusers() {
 
     const [selectedMember, setselectedMember] = useState('Select a member');
     const [selectedDuration, setselectedDuration] = useState('Select a duration');
-    const [members, setMembers] = useState();
-    const navigate = useNavigate();
+    const [members, setMembers] = useState([]);
 
     const { guserRole, setguserRole } = useContext(AuthContext);
-    const [selectedV2, setselectedV2] = useState();
+    const navigate = useNavigate();
 
     async function getMembers() {
         try {
-
             const response = await axios.get('http://localhost:3000/getnonmembers');
             console.log(response.data);
             setMembers(response.data);
+            console.log(members);
         }
         catch {
             console.error('get members failed');
         }
     }
+
+    useEffect(() => {
+        getMembers();
+    }, []);
+
     useEffect(() => {
         if (guserRole == '') {
             navigate('/');
@@ -35,20 +39,19 @@ function Enrollusers() {
         }
     }, [guserRole]);
 
-    async function enrollMembers(event){
-        try{
-            var details = {userId: selectedMember, months:selectedDuration}
+    async function enrollMembers(event) {
+        try {
+            var details = { userId: selectedMember, months: selectedDuration }
             const response = await axios.patch('http://localhost:3000/user/updateUserMembership', details);
-            console.log(response.data);
-            navigate('/enrollusers');
+            getMembers();
+            setselectedMember('Select a member');
+            setselectedDuration('Select a member');
+
         }
-        catch(error){
+        catch (error) {
             console.error('Enrollment unsuccessful', error.response.data);
         }
     }
-    useEffect(() => {
-        getMembers();
-    }, []);
 
     const setMember = (e) => {
         const target = e.target;
@@ -73,11 +76,11 @@ function Enrollusers() {
                             {selectedMember}
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" >Mountain View</a></li>
-                            <li><a class="dropdown-item" >Sunyvale</a></li>
-                            <li><a class="dropdown-item" >Milpitas</a></li>
-                            <li><a class="dropdown-item" >San jose</a></li>
-                            <li><a class="dropdown-item" >Santa clara</a></li>
+                            {
+                                members.map(member => (
+                                    <li><a class="dropdown-item" >{member.userId}</a></li>
+                                ))
+                            }
                         </ul>
                     </div>
                 </div>
@@ -97,7 +100,7 @@ function Enrollusers() {
                 </div>
 
                 <div>
-                    <button type="button" class="btn btn-success">Enroll</button>
+                    <button type="button" class="btn btn-success" onClick={enrollMembers}>Enroll</button>
                 </div>
             </div>
 

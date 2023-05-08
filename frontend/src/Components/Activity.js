@@ -6,27 +6,37 @@ import { AuthContext } from '../context/AuthProvider';
 function Activity() {
   const { guserID, setguserID } = useContext(AuthContext);
   const { guserRole, setguserRole } = useContext(AuthContext);
+  const [classesData, getclassesData] = useState([]);
+  const [machineData, getmachineData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(guserRole == ''){
-        navigate('/');
+    if (guserRole == '') {
+      navigate('/');
     }
-    else if(guserRole == 'admin'){
-        navigate('/enrollusers');
+    else if (guserRole == 'admin') {
+      navigate('/enrollusers');
     }
-    else if(guserRole == 'Non Member'){
-        navigate('/nonmember');
+    else if (guserRole == 'Non Member') {
+      navigate('/nonmember');
     }
-}, [guserRole]);
+  }, [guserRole]);
 
- const getActivities = () => {
+  async function getActivities(event) {
+    try {
+      // const classes = await axios.get('http://localhost:3000/membershipPlan');
+      // const machine = await axios.get
+      // setmembershipPlans(response.data);
+      // console.log(membershipPlans);
+    } catch (error) {
+      console.error('Error fetching data', error.response.data);
+    }
+  };
 
- }
- 
-useEffect(() => {
-  getActivities();
-}, []);
+  useEffect(() => {
+    getActivities();
+  }, []);
+
 
 
   return (

@@ -16,6 +16,7 @@ function Home() {
         try {
             const response = await axios.get('http://localhost:3000/membershipPlan');
             setmembershipPlans(response.data);
+            console.log(membershipPlans);
         } catch (error) {
             console.error('Error fetching data', error.response.data);
         }
