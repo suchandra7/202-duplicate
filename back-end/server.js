@@ -494,7 +494,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         const bookings = await Booking.find( { userId : userId})
         const classIds = [];
         const response = { resJson : [] }
-        bookings.forEach(booking => {
+        bookings.forEach((booking) => {
           classIds.push(booking.classId)
         });
         // console.log("classes");
@@ -588,7 +588,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         nextWeek.setDate(nextWeek.getDate() + 7);
         classes.forEach( (classe)=>{
           if( classe.startTime >= currentDate && classe.endTime <= nextWeek){
-            response.jsonres.push( {className : activityMap.get(classe.activityId) , startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor} )
+            response.jsonres.push( {className : activityMap.get(classe.activityId), classId: classe.classId , startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor} )
           }
         })
         res.status(200).json(response.jsonres)
@@ -604,7 +604,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         const userId = req.params.uId
         const bookings = await Booking.find( { userId : userId})
         const classIds = [];
-        bookings.forEach(booking => {
+        bookings.forEach((booking) => {
           classIds.push(booking.classId)
         });
         
@@ -930,12 +930,28 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+    app.get('/inOrOut/:uId', async(req,res)=>{
+      try {
+        const userId = req.params.uId
+        CheckInNOut.findOne( {userId : userId, checkOutTime : {  $exists: false  } } ).then( checkInNOutUser => {
+          if(!checkInNOutUser){
+            res.status(200).json({check : "In"})
+          }else{
+            res.status(200).json({check : "Out"})
+          }
+        })
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
     //updates only specific row of user wheere checkin in present and check out is not present
     app.patch('/updateCheckOut/:uId', async(req,res)=>{
       try {
         const userId = req.params.uId
         CheckInNOut.findOne( {userId : userId, checkOutTime : {  $exists: false  } } ).then( checkInNOutUser => {
-          console.log(checkInNOutUser.checkInId)
+          // console.log(checkInNOutUser.checkInId)
           checkInNOutUser.checkOutTime = new Date();
           checkInNOutUser.save();
           res.status(200).json({ success: true, message: 'Check out time updated successfully.' })
@@ -988,6 +1004,18 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+    // Analytics based end points
+    // app.get('/analytics/classEnrollment', async(req,res)=>{
+    //   const locations = ['San jose','Milpitas']
+    //   locations.forEach(async(location)=>{
+    //     const bookings = await Booking.find()
+    //     const classIds = [];
+    //     bookings.forEach( (booking) => {
+    //       classIds.push(booking.classId)
+    //   });
+    //   })
+      
+    // })
     
 
   }
