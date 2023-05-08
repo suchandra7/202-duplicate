@@ -2,13 +2,13 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 
-
 const LogHours = () => {
   const [selectedOption, setSelectedOption] = useState('select Machine');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const { guserRole, setguserRole } = useContext(AuthContext);
   const { guserId, setguserId } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const API = 'http://localhost:3000/addlogMachineTracking'
   useEffect(() => {
@@ -54,6 +54,8 @@ const LogHours = () => {
       alert("Please fill out all fields");
       return;
     }
+
+    console.log(formData);
 
     // Make a POST request to the backend endpoint
     fetch(API, {

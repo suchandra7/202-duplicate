@@ -486,7 +486,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
     })
 
     // return activity to hours for a single user in the given date time range
-    app.get('/activityHoursSpent', async(req,res)=>{
+    app.post('/activityHoursSpent', async(req,res)=>{
       try {
         const userId = req.body.userId
         const startDate = new Date(req.body.startDate)// need to check if i get a data object or just in string format
@@ -538,7 +538,9 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
     })
 
     //machine hours spent
-    app.get('/machineHoursSpent', async(req,res)=>{
+    app.post('/machineHoursSpent', async(req,res)=>{
+        console.log('************');
+        console.log(req.body);
         const userId = req.body.userId
         const startDate = new Date(req.body.startDate)// need to check if i get a data object or just in string format
         const endDate = new Date(req.body.endDate)
@@ -588,7 +590,11 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         nextWeek.setDate(nextWeek.getDate() + 7);
         classes.forEach( (classe)=>{
           if( classe.startTime >= currentDate && classe.endTime <= nextWeek){
+<<<<<<< Updated upstream
             response.jsonres.push( {className : activityMap.get(classe.activityId), classId: classe.classId , startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor} )
+=======
+            response.jsonres.push( {className : activityMap.get(classe.activityId) , classId : classe.classId, startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor} )
+>>>>>>> Stashed changes
           }
         })
         res.status(200).json(response.jsonres)

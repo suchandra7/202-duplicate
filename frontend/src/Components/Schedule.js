@@ -81,21 +81,6 @@ const Schedule = () => {
 
                                 ))
                             }
-                            {/* {
-                scheduleData((currSchedule) => {
-                
-                        <tr>
-                            <td>{currSchedule.className}</td>
-                            <td>{currSchedule.location}</td>
-                            <td>{currSchedule.startTime}</td>
-                            <td>{currSchedule.endTime}</td>
-                            <td>{currSchedule.startTime}</td>
-                            <td>{currSchedule.instructor}</td>
-                        </tr>
-                    
-                })
-            } 
-             */}
                         </tbody>
                     </table>
                 </div>

@@ -6,8 +6,10 @@ import { AuthContext } from '../context/AuthProvider';
 function Activity() {
   const { guserID, setguserID } = useContext(AuthContext);
   const { guserRole, setguserRole } = useContext(AuthContext);
-  const [classesData, getclassesData] = useState([]);
-  const [machineData, getmachineData] = useState([]);
+  const [classesData, setclassesData] = useState([]);
+  const [machineData, setmachineData] = useState([]);
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,24 +26,71 @@ function Activity() {
 
   async function getActivities(event) {
     try {
-      // const classes = await axios.get('http://localhost:3000/membershipPlan');
-      // const machine = await axios.get
-      // setmembershipPlans(response.data);
-      // console.log(membershipPlans);
+      const data = {
+        userId: guserID,
+        startTime: new Date(startTime),
+        endTime: new Date(endTime),
+      };
+      const classes = await axios.post('http://localhost:3000/activityHoursSpent', data);
+      const machine = await axios.post('http://localhost:3000/machineHoursSpent', data);
+      setclassesData(classes.data);
+      setmachineData(machine.data);
+      console.log(classes.data);
+      console.log(machine.data);
     } catch (error) {
       console.error('Error fetching data', error.response.data);
     }
   };
 
-  useEffect(() => {
-    getActivities();
-  }, []);
 
+  const handleStartTimeChange = (e) => {
+    setStartTime(e.target.value);
+  };
+
+  const handleEndTimeChange = (e) => {
+    setEndTime(e.target.value);
+  };
 
 
   return (
     <div>
+      <div>
+        <div className="form-group">
+          <div className="row">
+            <div className='center side'>
+              <h5>Start Time:</h5>
+              <input class="ip2" style={{ width: '210px' }}
+                type="datetime-local"
+                id="startTime"
+                value={startTime}
+                onChange={handleStartTimeChange}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="row">
+            <div className='center side'>
+              <h5>Start Time:</h5>
+              <input class="ip2" style={{ width: '210px' }}
+                type="datetime-local"
+                id="endTime"
+                value={endTime}
+                onChange={handleEndTimeChange}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='center side'>
+          <button type="submit" className="btn btn-success center" onClick={getActivities}><i class="fas fa-edit"></i>Submit</button>
+        </div>
+      </div>
+
       <div className='row center'>
+        <h1>Class Activity</h1>
       </div>
       <div className="row">
         <table class="table">
@@ -60,19 +109,11 @@ function Activity() {
               <td>Otto</td>
               <td>@mdo</td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
           </tbody>
         </table>
+      </div>
+      <div className='row center'>
+        <h1>Machine Activity</h1>
       </div>
     </div>
   )
