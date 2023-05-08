@@ -590,11 +590,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         nextWeek.setDate(nextWeek.getDate() + 7);
         classes.forEach( (classe)=>{
           if( classe.startTime >= currentDate && classe.endTime <= nextWeek){
-<<<<<<< Updated upstream
-            response.jsonres.push( {className : activityMap.get(classe.activityId), classId: classe.classId , startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor} )
-=======
-            response.jsonres.push( {className : activityMap.get(classe.activityId) , classId : classe.classId, startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor} )
->>>>>>> Stashed changes
+            response.jsonres.push( {className : activityMap.get(classe.activityId), classId : classe.classId, startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor} )
           }
         })
         res.status(200).json(response.jsonres)
