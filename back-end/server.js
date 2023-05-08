@@ -600,6 +600,37 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+    // updated future class search which provides user specific booked or not booked
+    app.post('/futureClasses', async (req,res)=>{
+      try {
+        const location = req.body.location
+        const userId = req.body.userId
+        const bookings = await Booking.find({userId : userId})
+        const classes =new Set()
+        bookings.forEach((booking)=>{
+          classes.add(booking.classId)
+        })
+        const classess = await Class.find( {location: location } )
+        const response = { jsonres: [] }
+        const currentDate = new Date();
+        const nextWeek = new Date();
+        nextWeek.setDate(nextWeek.getDate() + 7);
+        classess.forEach( (classe)=>{
+          if(classes.has(classe.classId)){
+            if( classe.startTime >= currentDate && classe.endTime <= nextWeek){
+              response.jsonres.push( {className : activityMap.get(classe.activityId), classId: classe.classId , startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor , booked : true })
+            }
+          }else{
+            response.jsonres.push( {className : activityMap.get(classe.activityId), classId: classe.classId , startTime : classe.startTime , endTime : classe.endTime , instructor : classe.instructor , booked : false })
+          }
+        })
+        res.status(200).json(response.jsonres)
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
+
     // return future classes (one week) of a user
     app.get('/futureClass/:uId', async (req,res)=>{
       try {
@@ -1007,17 +1038,19 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
     })
 
     // Analytics based end points
-    // app.get('/analytics/classEnrollment', async(req,res)=>{
-    //   const locations = ['San jose','Milpitas']
-    //   locations.forEach(async(location)=>{
-    //     const bookings = await Booking.find()
-    //     const classIds = [];
-    //     bookings.forEach( (booking) => {
-    //       classIds.push(booking.classId)
-    //   });
-    //   })
+
+    //
+    app.get('/analytics/classEnrollment', async(req,res)=>{
+      const locations = ['San jose','Milpitas']
+      locations.forEach(async(location)=>{
+        const bookings = await Booking.find()
+        const classIds = [];
+        bookings.forEach( (booking) => {
+          classIds.push(booking.classId)
+      });
+      })
       
-    // })
+    })
     
 
   }
