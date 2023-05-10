@@ -7,7 +7,7 @@ const LogHours = () => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const { guserRole, setguserRole } = useContext(AuthContext);
-  const { guserId, setguserId } = useContext(AuthContext);
+  const { guserID, setguserId } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const API = 'http://localhost:3000/addlogMachineTracking'
@@ -43,7 +43,7 @@ const LogHours = () => {
 
     // Create an object with the form data
     const formData = {
-      userId: guserId,
+      userId: guserID,
       machineName: selectedOption,
       startTime: new Date(startTime),
       endTime: new Date(endTime),
