@@ -48,9 +48,7 @@ function Signupforclass() {
             var classs = { userId: guserID, classId: clickedClassID }
             const response = await axios.post('http://localhost:3000/bookClass', classs);
             alert('Class booked successfully');
-            setselectedLocation('Select a location');
-            setClasses([]);
-
+            getClasses(selectedLocation);
         } catch (error) {
             console.error('Error fetching data', error.response.data);
         }
@@ -100,7 +98,7 @@ function Signupforclass() {
                                     <td>{x.instructor}</td>
                                     <td>
                                         {
-                                            (x.booked == 'true' ? 
+                                            (x.booked ? 
                                         <button type="button" class="btn btn-success" onClick={() => bookClass(x.classId)} disabled>Already booked</button> : 
                                         <button type="button" class="btn btn-success" onClick={() => bookClass(x.classId)}>Book</button>
                                         )

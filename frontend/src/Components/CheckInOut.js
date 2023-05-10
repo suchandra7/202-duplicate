@@ -143,7 +143,6 @@ const CheckInOut = () => {
                 {userId}
               </button>
               <ul class="dropdown-menu" >
-
                 {
                   users.map(user => (
                     <li><a class="dropdown-item" >{user.userId}</a></li>
@@ -160,7 +159,7 @@ const CheckInOut = () => {
         <div className="row">
           <div className='center side'>
             <h5 style={{ paddingRight: '15px' }}>Check In</h5>
-            <input class="ip2" style={{ width: '210px' }}
+            <input class="ip2" style={{ width: '250px' }}
               type="datetime-local"
               id="startTime"
               value={checkInTime}
@@ -175,7 +174,7 @@ const CheckInOut = () => {
         <div className="row">
           <div className='center side'>
             <h5>Check Out</h5>
-            <input class="ip2" style={{ width: '210px' }}
+            <input class="ip2" style={{ width: '250px' }}
               type="datetime-local"
               id="endTime"
               value={checkOutTime}
