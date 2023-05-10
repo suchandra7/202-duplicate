@@ -44,18 +44,18 @@ caloriesMap.set("4",120)
 caloriesMap.set("5",300)
 
 const machineSet = new Set();
-machineSet.add('thread mill')
-machineSet.add('cross fit')
-machineSet.add('cross ramp')
-machineSet.add('excercise bike')
-machineSet.add('rowing machine')
+machineSet.add('Treadmill')
+machineSet.add('Cross Fit')
+machineSet.add('Cross Ramp')
+machineSet.add('Excercise Bike')
+machineSet.add('Rowing Machine')
 
 const machineCaloriesMap = new Map();
-machineCaloriesMap.set("thread mill",258)
-machineCaloriesMap.set("cross fit",460)
-machineCaloriesMap.set("cross ramp",390)
-machineCaloriesMap.set("excercise bike",500)
-machineCaloriesMap.set("rowing machine",600)
+machineCaloriesMap.set("Treadmill",258)
+machineCaloriesMap.set("Cross Fit",460)
+machineCaloriesMap.set("Cross Ramp",390)
+machineCaloriesMap.set("Excercise Bike",500)
+machineCaloriesMap.set("Rowing Machine",600)
 
 app.listen(port, () => {
   console.log(`Gym Management app is running on ${port}`)
@@ -539,8 +539,6 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
 
     //machine hours spent
     app.post('/machineHoursSpent', async(req,res)=>{
-        console.log('************');
-        console.log(req.body);
         const userId = req.body.userId
         const startDate = new Date(req.body.startDate)// need to check if i get a data object or just in string format
         const endDate = new Date(req.body.endDate)

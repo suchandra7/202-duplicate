@@ -28,8 +28,8 @@ function Activity() {
     try {
       const data = {
         userId: guserID,
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        startDate: new Date(startTime),
+        endDate: new Date(endTime),
       };
       const classes = await axios.post('http://localhost:3000/activityHoursSpent', data);
       const machine = await axios.post('http://localhost:3000/machineHoursSpent', data);
@@ -59,7 +59,7 @@ function Activity() {
           <div className="row">
             <div className='center side'>
               <h5>Start Time:</h5>
-              <input class="ip2" style={{ width: '210px' }}
+              <input class="ip2" style={{ width: '250px' }}
                 type="datetime-local"
                 id="startTime"
                 value={startTime}
@@ -73,7 +73,7 @@ function Activity() {
           <div className="row">
             <div className='center side'>
               <h5>Start Time:</h5>
-              <input class="ip2" style={{ width: '210px' }}
+              <input class="ip2" style={{ width: '250px' }}
                 type="datetime-local"
                 id="endTime"
                 value={endTime}
@@ -92,29 +92,61 @@ function Activity() {
       <div className='row center'>
         <h1>Class Activity</h1>
       </div>
+
       <div className="row">
-        <table class="table">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className='col-10 offset-1'>
+          <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">Activity Name</th>
+                <th scope="col">Hours Spent</th>
+                <th scope="col">Calories burnt</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              {
+                classesData.map(classs => (
+                  <tr key={classs.activityName}>
+                    <td>{classs.activityName}</td>
+                    <td>{classs.activityHours}</td>
+                    <td>{classs.caloriesBurnt}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
       </div>
+
       <div className='row center'>
         <h1>Machine Activity</h1>
       </div>
+
+      <div className="row">
+        <div className='col-10 offset-1'>
+          <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">Machine Name</th>
+                <th scope="col">Hours Spent</th>
+                <th scope="col">Calories burnt</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              {
+                machineData.map(machine => (
+                  <tr key={machine.activityName}>
+                    <td>{machine.machineName}</td>
+                    <td>{machine.hoursSpent}</td>
+                    <td>{machine.caloriesBurnt}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   )
 }

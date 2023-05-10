@@ -91,11 +91,11 @@ const LogHours = () => {
                 {selectedOption}
               </button>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" >Thread Mill</a></li>
-                <li><a class="dropdown-item" >Leg Extension</a></li>
-                <li><a class="dropdown-item" >Stationary Bicycle</a></li>
-                <li><a class="dropdown-item" >Dumbbell</a></li>
-                <li><a class="dropdown-item" >Battle Ropes</a></li>
+                <li><a class="dropdown-item" >Treadmill</a></li>
+                <li><a class="dropdown-item" >Cross Fit</a></li>
+                <li><a class="dropdown-item" >Cross Ramp</a></li>
+                <li><a class="dropdown-item" >Exercise Bike</a></li>
+                <li><a class="dropdown-item" >Rowing Machine</a></li>
               </ul>
             </div>
           </div>

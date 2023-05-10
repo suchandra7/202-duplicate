@@ -73,9 +73,9 @@ const Schedule = () => {
                                     <tr>
                                         <td>{currSchedule.className}</td>
                                         <td>{currSchedule.location}</td>
-                                        <td>{JSON.stringify(currSchedule.startTime).substring(1, 11)}</td>
-                                        <td>{currSchedule.startTime}</td>
-                                        <td>{currSchedule.endTime}</td>
+                                        <td>{(new Date(currSchedule.startTime)).toLocaleDateString()}</td>
+                                        <td>{(new Date(currSchedule.startTime)).toLocaleTimeString()}</td>
+                                        <td>{(new Date(currSchedule.endTime)).toLocaleTimeString()}</td>
                                         <td>{currSchedule.instructor}</td>
                                     </tr>
 
