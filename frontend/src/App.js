@@ -17,6 +17,8 @@ import LogHours from './Components/LogHours';
 import CheckInOut from './Components/CheckInOut';
 import "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js";
 import Nonmember from './Components/Nonmember';
+import Hoursspent from './Components/Hoursspent';
+import Noofvisitors from './Components/Noofvisitors';
 
 function App() {
   const [guserID, setguserID] = useState('');
@@ -44,6 +46,10 @@ function App() {
           <Route exact path="/enrollusers" element={<Enrollusers />} />
           <Route exact path="/freetrials" element={<FreeTrials />} />
           <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/hoursspent" element={<Hoursspent />} />
+          <Route exact path="/noofvisitors" element={<Noofvisitors />} />
+
+
 
 
           <Route exact path="/nonmember" element={<Nonmember />} />

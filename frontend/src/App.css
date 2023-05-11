@@ -44,3 +44,15 @@
   width: 200px;
   height: 15px;  
 }
+
+.pie{
+  display: flex;
+  justify-content: center;
+  height: 500px;
+  width:500px;
+}
+
+.piechart{
+  height: 200px;
+  width:200px;
+}

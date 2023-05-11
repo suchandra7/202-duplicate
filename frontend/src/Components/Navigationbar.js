@@ -41,8 +41,15 @@ function Header() {
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/freetrials">Free trials</Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/dashboard">Dashboard</Link>
+                                <li class="nav-item dropdown">
+                                    <Link class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Analytics dashboards
+                                    </Link>
+                                    <ul class="dropdown-menu">
+                                        <li><Link class="dropdown-item" to="/dashboard">Class enrollments</Link></li>
+                                        <li><Link class="dropdown-item" to="/hoursspent">Hours spent</Link></li>
+                                        <li><Link class="dropdown-item" to="/noofvisitors">Number of visitors</Link></li>
+                                    </ul>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" onClick={logout}>Logout</Link>
