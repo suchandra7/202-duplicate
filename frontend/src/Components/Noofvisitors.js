@@ -9,6 +9,7 @@ function Noofvisitors() {
     const { guserName, setguserName } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const data = [67, 15, 83, 94, 22, 61, 45, 70, 23, 31, 80, 3, 76, 58, 99, 8, 45, 60, 84, 52, 96, 69, 29, 86, 52, 19, 97, 9, 50, 91];
     useEffect(() => {
         if(guserRole == ''){
             navigate('/');
