@@ -1200,5 +1200,37 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
           res.status(500).json({message: error.message})
       }
     })
+
+    // return hour wise array, saying how many ppl are in that gym at a given time.
+    app.post('/analytics/visitorsPerHours', async(req,res) =>{
+      try {
+        const location = req.body.location
+        const firstTime =new Date(req.body.date)
+        firstTime.setHours(0, 0, 0, 0);
+        const lastTime = new Date(firstTime)
+        lastTime.setHours(23,59,59,999);
+        console.log(firstTime,lastTime)
+        const query = {
+          checkInTime : { $gte: firstTime, $lte: lastTime },
+          location : location
+        }
+        const results = await CheckInNOut.find(query);
+        const arr = Array.from({length: 24}).fill(0);
+        const hourWiseDistinctUserList = { resJson:arr}
+        console.log(results)
+        results.forEach((result)=>{
+          // need to iterate on in n out times based on hrs need to add.... continue from here...
+          const hour1 = result.checkInTime.getHours();
+          const hour2 = result.checkOutTime.getHours();
+          for(let i=hour1;i<=hour2;i++){
+            hourWiseDistinctUserList.resJson[i]++;
+          }
+        })
+      res.status(200).json(hourWiseDistinctUserList.resJson)
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
+    })
   }
   ).catch((error)=>console.log("db connection error"+error));
