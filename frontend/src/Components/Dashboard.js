@@ -97,7 +97,8 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
-            <div className='row pie'>
+            <div className='row'>
+                <div className='col-6 offset-3'>
                 {
                     (total != 0 ?                
                     <Pie
@@ -107,6 +108,8 @@ function Dashboard() {
                          >
                          </Pie> : <h3 className='center'>No class enrollments in the current week for the selected location</h3>)
                 }
+                </div>
+                
             </div>
         </div>
 
