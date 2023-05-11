@@ -14,7 +14,7 @@ const CheckInNOut = require('./model/checkInNOutModel')
 const MembershipPlan = require('./model/membershipPlan')
 
 const cors = require("cors")
-const cron = require('node-cron');
+const moment = require('moment');
 
 // Schedule the cron job to run at midnight every day
 
@@ -1039,19 +1039,130 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
 
     // Analytics based end points
 
-    //
-    app.get('/analytics/classEnrollment', async(req,res)=>{
-      const locations = ['San jose','Milpitas']
-      locations.forEach(async(location)=>{
+    //total no of classes enrolled per day or week based on location, days will be considered by starting from last sunday.
+    app.get('/analytics/classEnrollment/:location', async(req,res)=>{
+      try {
+        // console.log("hitt");
+        const location = req.params.location
         const bookings = await Booking.find()
         const classIds = [];
+        const classToBookingCountMap = new Map()
         bookings.forEach( (booking) => {
           classIds.push(booking.classId)
-      });
-      })
-      
+          if(classToBookingCountMap.has(booking.classId)){
+            const val = classToBookingCountMap.get(booking.classId)
+            classToBookingCountMap.set(booking.classId,val+1)
+          }else{
+            classToBookingCountMap.set(booking.classId,1)
+          }
+        });
+        // console.log(classToBookingCountMap)
+        // const now = moment()
+        const currentDate = moment();
+        // Get the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+        const dayOfWeek = currentDate.day();
+        // Subtract the number of days from the current date to get to Monday
+        const sunday = moment(currentDate).subtract(dayOfWeek, 'days');
+        const monday = moment(currentDate).subtract(dayOfWeek - 1, 'days');
+        const tuesday = moment(currentDate).subtract(dayOfWeek - 2, 'days');
+        const wednesday = moment(currentDate).subtract(dayOfWeek - 3, 'days');
+        const thursday = moment(currentDate).subtract(dayOfWeek - 4, 'days');
+        const friday = moment(currentDate).subtract(dayOfWeek - 5, 'days');
+        const saturday = moment(currentDate).subtract(dayOfWeek - 6, 'days');
+        const sundayStart = sunday.startOf('day').toDate();
+        const sundayEnd = sunday.endOf('day').toDate();
+        const mondayStart = monday.startOf('day').toDate();
+        const mondayEnd = monday.endOf('day').toDate();
+        const tuesdayStart = tuesday.startOf('day').toDate();
+        const tuesdayEnd = tuesday.endOf('day').toDate();
+        const weddayStart = wednesday.startOf('day').toDate();
+        const weddayEnd = wednesday.endOf('day').toDate();
+        const thurdayStart = thursday.startOf('day').toDate();
+        const thurdayEnd = thursday.endOf('day').toDate();
+        const fridayStart = friday.startOf('day').toDate();
+        const fridayEnd = friday.endOf('day').toDate();
+        const saturdayStart = saturday.startOf('day').toDate();
+        const saturdayEnd = saturday.endOf('day').toDate();
+
+        const query_sun = {
+          classId: { $in: classIds },
+          startTime: { $gte: sundayStart, $lte: sundayEnd },
+          location : location
+        };
+        const query_mon = {
+          classId: { $in: classIds },
+          startTime: { $gte: mondayStart, $lte: mondayEnd },
+          location : location
+        };
+        const query_tue = {
+          classId: { $in: classIds },
+          startTime: { $gte: tuesdayStart, $lte: tuesdayEnd },
+          location : location
+        };
+        const query_wed = {
+          classId: { $in: classIds },
+          startTime: { $gte: weddayStart, $lte: weddayEnd },
+          location : location
+        };
+        const query_thur = {
+          classId: { $in: classIds },
+          startTime: { $gte: thurdayStart, $lte: thurdayEnd },
+          location : location
+        };
+        const query_fri = {
+          classId: { $in: classIds },
+          startTime: { $gte: fridayStart, $lte: fridayEnd },
+          location : location
+        };
+        const query_sat = {
+          classId: { $in: classIds },
+          startTime: { $gte: saturdayStart, $lte: saturdayEnd },
+          location : location
+        };
+
+        const results_1 = await Class.find(query_sun);
+        const results_2 = await Class.find(query_mon);
+        const results_3 = await Class.find(query_tue);
+        const results_4 = await Class.find(query_wed);
+        const results_5 = await Class.find(query_thur);
+        const results_6 = await Class.find(query_fri);
+        const results_7 = await Class.find(query_sat);
+        // console.log(results.length)
+        let count1=0
+        results_1.forEach((singleObj)=>{
+          count1 += 1+classToBookingCountMap.get(singleObj.classId)
+        })
+        let count2=0
+        results_2.forEach((singleObj)=>{
+          count2 += 1+classToBookingCountMap.get(singleObj.classId)
+        })
+        let count3=0
+        results_3.forEach((singleObj)=>{
+          count3 += 1+classToBookingCountMap.get(singleObj.classId)
+        })
+        let count4=0
+        results_4.forEach((singleObj)=>{
+          count4 += 1+classToBookingCountMap.get(singleObj.classId)
+        })
+        let count5=0
+        results_5.forEach((singleObj)=>{
+          count5 += 1+classToBookingCountMap.get(singleObj.classId)
+        })
+        let count6=0
+        results_6.forEach((singleObj)=>{
+          count6 += 1+classToBookingCountMap.get(singleObj.classId)
+        })
+        let count7=0
+        results_7.forEach((singleObj)=>{
+          count7 += 1+classToBookingCountMap.get(singleObj.classId)
+        })
+        res.status(200).json({ sunday : count1, monday : count2, tuesday : count3 ,wednesday : count4, thursday : count5, friday : count6,
+          saturday : count7 })
+      } catch (error) {
+        console.log(error)
+        res.status(500).json({message: error.message})
+      }
     })
-    
 
   }
   ).catch((error)=>console.log("db connection error"+error));
