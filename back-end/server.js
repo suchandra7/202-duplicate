@@ -68,7 +68,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
          // Code to run at the beginning of a new day
 
         try {
-          console.log("Triggered!!!!!!!");
+          // console.log("Triggered!!!!!!!");
           const now = new Date();
           for (let i = 0; i < 20; i++) {
             now.setDate(now.getDate() + 1);
@@ -952,10 +952,11 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
     //null api --> db.collection.find({ column: { $type: 10 } })
 
     //update checkin time
-    app.post('/updateCheckIn/:uId', async(req,res)=>{
+    app.post('/updateCheckIn', async(req,res)=>{
       try {
-        const userId = req.params.uId;
-        const checkInNOut = await CheckInNOut.create({userId : userId,  checkInTime : new Date()})
+        const userId = req.body.uId;
+        const location = req.body.location;
+        const checkInNOut = await CheckInNOut.create({userId : userId,  checkInTime : new Date() , location: location})
         res.status(200).json(checkInNOut)
       } catch (error) {
         console.log(error)
@@ -970,7 +971,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
           if(!checkInNOutUser){
             res.status(200).json({check : "In"})
           }else{
-            res.status(200).json({check : "Out"})
+            res.status(200).json({check : "Out", location : checkInNOutUser.location})
           }
         })
       } catch (error) {
@@ -1164,5 +1165,40 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
       }
     })
 
+    // to get hours spent at gym based on the location in the past 30 days
+    app.get('/analytics/hoursSpentAtGym/:location', async(req,res) =>{
+      try {
+        const location = req.params.location;
+        const today = new Date();
+        let temp = new Date(); // create a new date object
+        temp.setDate(today.getDate() - 30);
+        // const results = await Class.find(query);
+        const ar = { reJson: [] }
+        for(let i=0;i<30;i++){
+          let today = temp
+          let tomorrow = new Date(today)
+          tomorrow.setDate(today.getDate() +1);
+          // console.log(today,tomorrow)
+          const query = {
+            checkInTime : { $gte: today, $lte: tomorrow },
+            checkOutTime : { $gte: today, $lte: tomorrow },
+            location : location
+          };
+          const results = await CheckInNOut.find(query);
+          let hrs = 0
+          results.forEach((result)=>{
+            // console.log(result.checkOutTime, result.checkInTime)
+            let diffInMs = result.checkOutTime.getTime() - result.checkInTime.getTime(); 
+            hrs += (diffInMs)/(1000 * 60 * 60)
+          })
+          ar.reJson.push(parseFloat(hrs.toFixed(2)))
+          temp = tomorrow
+        }
+        res.status(200).json(ar.reJson)
+      } catch (error) {
+          console.log(error)
+          res.status(500).json({message: error.message})
+      }
+    })
   }
   ).catch((error)=>console.log("db connection error"+error));

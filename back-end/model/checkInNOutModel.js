@@ -6,7 +6,8 @@ const checkInNOutSchema = mongoose.Schema(
         userId : { type : String, require : true},
         checkInId : { type : Number},
         checkInTime : { type : Date},
-        checkOutTime : { type : Date}
+        checkOutTime : { type : Date},
+        location : { type : String}
     },
     {
         timestamps : true
