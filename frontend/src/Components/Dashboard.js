@@ -24,11 +24,15 @@ function Dashboard() {
     }, [guserRole]);
     
     return (
-        <div>
-            <div>{guserID}</div>
-            <div>{guserRole}</div>
-            <div>{guserEmail}</div>
-            <div>{guserName}</div>
+        <div >
+            <div className='row center'>
+                <h1>
+                    Class enrollment in the current week
+                </h1>
+            </div>
+            <div className='row'>
+
+            </div>
         </div>
 
     )
