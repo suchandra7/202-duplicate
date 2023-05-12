@@ -1205,7 +1205,11 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
     app.post('/analytics/visitorsPerHours', async(req,res) =>{
       try {
         const location = req.body.location
+        let weekday = true
         const firstTime =new Date(req.body.date)
+        if (firstTime.getDay() === 0 || firstTime.getDay() === 6) {
+          weekday = false;
+        }
         firstTime.setHours(0, 0, 0, 0);
         const lastTime = new Date(firstTime)
         lastTime.setHours(23,59,59,999);
@@ -1216,7 +1220,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
         }
         const results = await CheckInNOut.find(query);
         const arr = Array.from({length: 24}).fill(0);
-        const hourWiseDistinctUserList = { resJson:arr}
+        const hourWiseDistinctUserList = { resJson:arr }
         console.log(results)
         results.forEach((result)=>{
           // need to iterate on in n out times based on hrs need to add.... continue from here...
@@ -1226,6 +1230,7 @@ mongoose.connect("mongodb+srv://suchandranathbajjuri:Suchi7@cluster202.v83m9mk.m
             hourWiseDistinctUserList.resJson[i]++;
           }
         })
+        hourWiseDistinctUserList.resJson.push(weekday)
       res.status(200).json(hourWiseDistinctUserList.resJson)
       } catch (error) {
         console.log(error)
