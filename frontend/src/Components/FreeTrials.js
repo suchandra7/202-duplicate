@@ -7,20 +7,20 @@ import { useNavigate } from "react-router-dom";
 function FreeTrials() {
     const { guserID, setguserID } = useContext(AuthContext);
     const { guserRole, setguserRole } = useContext(AuthContext);
-    const [selectedMember, setselectedMember] = useState('Select a member');
+    const [selectedMember, setselectedMember] = useState('Select a user');
     const [selectedDuration, setselectedDuration] = useState('1');
     const [members, setMembers] = useState([]);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(guserRole == ''){
+        if (guserRole == '') {
             navigate('/');
         }
-        else if(guserRole == 'member'){
+        else if (guserRole == 'member') {
             navigate('/member');
         }
-        else if(guserRole == 'Non Member'){
+        else if (guserRole == 'Non Member') {
             navigate('/nonmember');
         }
     }, [guserRole]);
@@ -71,32 +71,40 @@ function FreeTrials() {
             console.error('Enrollment unsuccessful', error.response.data);
         }
     }
-    
-    return (
-        <div className='row'>
-        <div className='freetrial'>
-            <div className='center side'>
-                <h3> Member</h3>
-                <div class="dropdown" onClick={setMember}>
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {selectedMember}
-                    </button>
-                    <ul class="dropdown-menu">
-                        {
-                            members.map(member => (
-                                <li><a class="dropdown-item" >{member.userId}</a></li>
-                            ))
-                        }
-                    </ul>
-                </div>
-            </div>
 
-            <div>
-                <button type="button" class="btn btn-success" onClick={enrollMembers}>Give free trial</button>
+    return (
+        <div>
+            <div className='row center'>
+                <h1>
+                    Select user to give free trial
+                </h1>
+            </div>
+            <div className='row'>
+                <div className='freetrial'>
+                    <div className='center side'>
+                        <h3> User</h3>
+                        <div class="dropdown" onClick={setMember}>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {selectedMember}
+                            </button>
+                            <ul class="dropdown-menu">
+                                {
+                                    members.map(member => (
+                                        <li><a class="dropdown-item" >{member.userId}</a></li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn btn-success" onClick={enrollMembers}>Give free trial</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-    </div>
 
     )
 }

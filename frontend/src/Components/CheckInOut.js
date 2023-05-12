@@ -78,7 +78,7 @@ const CheckInOut = () => {
       checkOutTime: checkOutTime,
     };
     console.log(checkInOutData);
-    if ((!userId || userId=='Select User')) {
+    if ((!userId || userId == 'Select User')) {
       alert("Please select the user");
       return;
     }
@@ -132,69 +132,80 @@ const CheckInOut = () => {
   };
 
   return (
-    <form className="form-container" style={{ paddingTop: '50px' }} onSubmit={handleSubmit}>
-      <div className="form-group">
+    <div>
+      <div className='row center'>
+        <h1>
+          Select user and time to submit checkin/checkout
+        </h1>
+      </div>
+      <div className='row'>
+        <form className="form-container" onSubmit={handleSubmit}>
+          <div className="form-group">
 
-        <div className='row'>
-          <div className='center side'>
-            <h5 style={{ paddingRight: '48px' }}> User    </h5>
-            <div class="dropdown" onClick={setValue}  >
-              <button class="btn btn-secondary dropdown-toggle" style={{ width: '210px' }} type="button" data-bs-toggle="dropdown" aria-expanded="false"  >
-                {userId}
-              </button>
-              <ul class="dropdown-menu" >
-                {
-                  users.map(user => (
-                    <li><a class="dropdown-item" >{user.userId}</a></li>
-                  ))
-                }
-              </ul>
+            <div className='row'>
+              <div className='center side'>
+                <h5 style={{ paddingRight: '48px' }}> User    </h5>
+                <div class="dropdown" onClick={setValue}  >
+                  <button class="btn btn-secondary dropdown-toggle" style={{ width: '210px' }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {userId}
+                  </button>
+                  <ul class="dropdown-menu" >
+                    {
+                      users.map(user => (
+                        <li><a class="dropdown-item" >{user.userId}</a></li>
+                      ))
+                    }
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div className="form-group">
+            <div className="row">
+              <div className='center side'>
+                <h5 style={{ paddingRight: '15px' }}>Check In</h5>
+                <input class="ip2" style={{ width: '250px' }}
+                  type="datetime-local"
+                  id="startTime"
+                  value={checkInTime}
+                  onChange={handleCheckInTimeChange}
+                  disabled={icheckInTime}
+                  required={!icheckInTime}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
+          <div className="form-group">
+            <div className="row">
+              <div className='center side'>
+                <h5>Check Out</h5>
+                <input class="ip2" style={{ width: '250px' }}
+                  type="datetime-local"
+                  id="endTime"
+                  value={checkOutTime}
+                  onChange={handleCheckOutTimeChange}
+                  disabled={icheckOutTime}
+                  required={!icheckOutTime}
+                />
+              </div>
+            </div>
+          </div>
+          <br></br>
+          <div className="form-group">
+            <div className="row">
+              <div className='center side'>
+                <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Submit</button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
 
-      <div className="form-group">
-        <div className="row">
-          <div className='center side'>
-            <h5 style={{ paddingRight: '15px' }}>Check In</h5>
-            <input class="ip2" style={{ width: '250px' }}
-              type="datetime-local"
-              id="startTime"
-              value={checkInTime}
-              onChange={handleCheckInTimeChange}
-              disabled={icheckInTime}
-              required={!icheckInTime}
-            />
-          </div>
-        </div>
-      </div>
+    </div>
 
-      <div className="form-group">
-        <div className="row">
-          <div className='center side'>
-            <h5>Check Out</h5>
-            <input class="ip2" style={{ width: '250px' }}
-              type="datetime-local"
-              id="endTime"
-              value={checkOutTime}
-              onChange={handleCheckOutTimeChange}
-              disabled={icheckOutTime}
-              required={!icheckOutTime} 
-            />
-          </div>
-        </div>
-      </div>
-      <br></br>
-      <div className="form-group">
-        <div className="row">
-          <div className='center side'>
-            <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Submit</button>
-          </div>
-        </div>
-      </div>
-    </form>
   );
 };
 

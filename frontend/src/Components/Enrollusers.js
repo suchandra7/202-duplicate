@@ -79,44 +79,53 @@ function Enrollusers() {
     }
 
     return (
-        <div className='row'>
-            <div className='enroll'>
-                <div className='center side'>
-                    <h3> Member</h3>
-                    <div class="dropdown" onClick={setMember}>
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" required> 
-                            {selectedMember}
-                        </button>
-                        <ul class="dropdown-menu">
-                            {
-                                members.map(member => (
-                                    <li><a class="dropdown-item" >{member.userId}</a></li>
-                                ))
-                            }
-                        </ul>
+        <div>
+            <div className='row center'>
+                <h1>
+                    Select member and duration to enroll a new member
+                </h1>
+            </div>
+            <div className='row'>
+                <div className='enroll'>
+                    <div className='center side'>
+                        <h3> Member</h3>
+                        <div class="dropdown" onClick={setMember}>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" required>
+                                {selectedMember}
+                            </button>
+                            <ul class="dropdown-menu">
+                                {
+                                    members.map(member => (
+                                        <li><a class="dropdown-item" >{member.userId}</a></li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className='center side'>
+                        <h3>Duration</h3>
+                        <div class="dropdown" onClick={setDuration}>
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" required>
+                                {selectedDuration}
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" >3 </a></li>
+                                <li><a class="dropdown-item" >6</a></li>
+                                <li><a class="dropdown-item" >12</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn btn-success" onClick={enrollMembers}>Enroll</button>
                     </div>
                 </div>
 
-                <div className='center side'>
-                    <h3>Duration</h3>
-                    <div class="dropdown" onClick={setDuration}>
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" required>
-                            {selectedDuration}
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" >3 </a></li>
-                            <li><a class="dropdown-item" >6</a></li>
-                            <li><a class="dropdown-item" >12</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div>
-                    <button type="button" class="btn btn-success" onClick={enrollMembers}>Enroll</button>
-                </div>
             </div>
 
         </div>
+
     )
 }
 
