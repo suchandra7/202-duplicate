@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Chart as ChartJS, BarElement, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
+import configData from '../config.json';
 
 
 function Noofvisitors() {
@@ -14,6 +15,7 @@ function Noofvisitors() {
     const [total, setTotal] = useState(0);
     const [weekday, setweekday] = useState();
     const [date, setDate] = useState('');
+    const API = configData.API;
 
 
     const navigate = useNavigate();
@@ -50,7 +52,19 @@ function Noofvisitors() {
                 date: temp,
                 location: selectedLocation
             };
-            const response = await axios.post('http://localhost:3000/analytics/visitorsPerHours', obj);
+            if(!date && selectedLocation=='Select a location'){
+                alert("Please select date and location.");
+                return;
+            }
+            else if(!date){
+                alert("Please select date.");
+                return;
+            }
+            else if(selectedLocation == 'Select a location'){
+                alert("Please select location");
+                return;
+            }
+            const response = await axios.post(API + 'analytics/visitorsPerHours', obj);
             const hourData = response.data.slice(0, 24);
             setweekday(response.data[24]);
             setTotal(hourData.reduce((t, c) => t + c));
@@ -100,7 +114,7 @@ function Noofvisitors() {
                     <h3>
                         Date
                     </h3>
-                    <input type="date" value={date} onChange={handleDateChange} />
+                    <input type="date" class ="ip2" value={date} onChange={handleDateChange}/>
                     <div className='center side'>
                         <h3>Location</h3>
                         <div class="dropdown" onClick={setValue}>

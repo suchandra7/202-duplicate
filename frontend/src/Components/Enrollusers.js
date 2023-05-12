@@ -57,7 +57,7 @@ function Enrollusers() {
                 alert ("Please select duration");
                 return;
             }
-            const response = await axios.patch('user/updateUserMembership', details);
+            const response = await axios.patch(API + 'user/updateUserMembership', details);
             getMembers();
             setselectedMember('Select a member');
             setselectedDuration('Select a duration');
