@@ -32,8 +32,8 @@ function Activity() {
         endDate: new Date(endTime),
       };
       if (startTime && endTime){
-      const classes = await axios.post('http://localhost:3000/activityHoursSpent', data);
-      const machine = await axios.post('http://localhost:3000/machineHoursSpent', data);
+      const classes = await axios.post('http://52.40.70.166:3000/activityHoursSpent', data);
+      const machine = await axios.post('http://52.40.70.166:3000/machineHoursSpent', data);
       setclassesData(classes.data);
       setmachineData(machine.data);
       console.log(classes.data);

@@ -45,7 +45,7 @@ function Dashboard() {
 
     async function getClassEnrollment(location) {
         try {
-            const response = await axios.get('http://localhost:3000/analytics/classEnrollment/' + location);
+            const response = await axios.get('http://52.40.70.166:3000/analytics/classEnrollment/' + location);
             console.log(response.data);
             setTotal(response.data.sunday + response.data.monday + response.data.tuesday + response.data.wednesday + response.data.thursday + response.data.friday + response.data.saturday)
             setweekData(

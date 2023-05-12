@@ -15,7 +15,7 @@ const CheckInOut = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:3000/user'); // Replace with your API URL
+      const response = await fetch('http://52.40.70.166:3000/user'); // Replace with your API URL
       const data = await response.json();
       setUsers(data);
       console.log(users);
@@ -47,7 +47,7 @@ const CheckInOut = () => {
   }
 
   async function getUserCheckStatus(user) {
-    const API = 'http://localhost:3000/inOrOut/' + user;
+    const API = 'http://52.40.70.166:3000/inOrOut/' + user;
 
     try {
       const response = await axios.get(API);
@@ -83,7 +83,7 @@ const CheckInOut = () => {
       return;
     }
     if (icheckInTime == false) {
-      const API = 'http://localhost:3000/updateCheckIn/' + userId;
+      const API = 'http://52.40.70.166:3000/updateCheckIn/' + userId;
       fetch(API, {
         method: 'POST',
         headers: {
@@ -105,7 +105,7 @@ const CheckInOut = () => {
         });
     }
     else {
-      const API = 'http://localhost:3000/updateCheckOut/' + userId;
+      const API = 'http://52.40.70.166:3000/updateCheckOut/' + userId;
       fetch(API, {
         method: 'PATCH',
         headers: {

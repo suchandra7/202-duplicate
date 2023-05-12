@@ -33,7 +33,7 @@ function FreeTrials() {
     }
     async function getMembers() {
         try {
-            const response = await axios.get('http://localhost:3000/getnonmembers');
+            const response = await axios.get('http://52.40.70.166:3000/getnonmembers');
             console.log(response.data);
             setMembers(response.data);
             console.log(members);
@@ -62,7 +62,7 @@ function FreeTrials() {
                 alert ("Please select duration");
                 return;
             }
-            const response = await axios.patch('http://localhost:3000/user/updateUserMembership', details);
+            const response = await axios.patch('http://52.40.70.166:3000/user/updateUserMembership', details);
             getMembers();
             setselectedMember('Select a member');
 

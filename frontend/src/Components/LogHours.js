@@ -10,7 +10,7 @@ const LogHours = () => {
   const { guserID, setguserId } = useContext(AuthContext);
 
   const navigate = useNavigate();
-  const API = 'http://localhost:3000/addlogMachineTracking'
+  const API = 'http://52.40.70.166:3000/addlogMachineTracking'
   useEffect(() => {
     if (guserRole == '') {
       navigate('/');

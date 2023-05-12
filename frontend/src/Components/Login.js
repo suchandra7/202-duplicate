@@ -43,7 +43,7 @@ function Login() {
         event.preventDefault();
         var user_details = { userId: userID, password: password }
         try {
-            const response = await axios.post('http://localhost:3000/user/validate', user_details);
+            const response = await axios.post('http://52.40.70.166:3000/user/validate', user_details);
             console.log('login successful!', response.data);
             setguserID(response.data.userId);
             setguserRole(response.data.role);

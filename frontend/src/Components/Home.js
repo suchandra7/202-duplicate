@@ -14,7 +14,7 @@ function Home() {
 
     async function getMembership(event) {
         try {
-            const response = await axios.get('http://localhost:3000/membershipPlan');
+            const response = await axios.get('http://52.40.70.166:3000/membershipPlan');
             setmembershipPlans(response.data);
             console.log(membershipPlans);
         } catch (error) {

@@ -50,7 +50,7 @@ function Register() {
         event.preventDefault();
         var user_details = { userId: userID, name: name, email: email, password: password }
         try {
-          const response = await axios.post('http://localhost:3000/addUser', user_details);
+          const response = await axios.post('http://52.40.70.166:3000/addUser', user_details);
           setName("");
           setEmail("");
           setPassword("");

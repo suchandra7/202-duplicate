@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthProvider';
 import { useNavigate } from "react-router-dom";
-const API = 'http://localhost:3000/futureClass/';
+const API = 'http://52.40.70.166:3000/futureClass/';
 
 
 const Schedule = () => {

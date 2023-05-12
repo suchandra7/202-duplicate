@@ -60,7 +60,7 @@ function Hoursspent() {
 
     async function getHours(location) {
         try {
-            const response = await axios.get('http://localhost:3000/analytics/hoursSpentAtGym/' + location);
+            const response = await axios.get('http://52.40.70.166:3000/analytics/hoursSpentAtGym/' + location);
             console.log(response.data);
             const weekData = response.data.slice(-7).reverse();
             setTotal(weekData.reduce((t,c) => t+c));

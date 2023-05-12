@@ -27,7 +27,7 @@ function Signupforclass() {
     async function getClasses(location) {
         try {
             var req = { userId: guserID, location: location }
-            const response = await axios.post('http://localhost:3000/futureClasses',req);
+            const response = await axios.post('http://52.40.70.166:3000/futureClasses',req);
             setClasses(response.data);
             console.log(response.data);
         } catch (error) {
@@ -46,7 +46,7 @@ function Signupforclass() {
         console.log(clickedClassID);
         try {
             var classs = { userId: guserID, classId: clickedClassID }
-            const response = await axios.post('http://localhost:3000/bookClass', classs);
+            const response = await axios.post('http://52.40.70.166:3000/bookClass', classs);
             alert('Class booked successfully');
             getClasses(selectedLocation);
         } catch (error) {

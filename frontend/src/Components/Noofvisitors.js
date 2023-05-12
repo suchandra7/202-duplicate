@@ -48,7 +48,7 @@ function Noofvisitors() {
                 date: new Date(date),
                 location: selectedLocation
             };
-            const response = await axios.post('http://localhost:3000/analytics/visitorsPerHours', obj);
+            const response = await axios.post('http://52.40.70.166:3000/analytics/visitorsPerHours', obj);
             console.log(response.data);
             const hourData = response.data.slice(0, 24);
             setweekday(response.data[24]);
