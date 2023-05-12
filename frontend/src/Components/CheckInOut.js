@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import configData from '../config.json';
 
 const CheckInOut = () => {
   const [userId, setUserId] = useState('Select User');
@@ -8,14 +9,16 @@ const CheckInOut = () => {
   const [icheckInTime, setiCheckInTime] = useState(false);
   const [icheckOutTime, setiCheckOutTime] = useState(false);
   const [users, setUsers] = useState([]);
+  const API = configData.API;
 
   useEffect(() => {
     fetchUsers();
+    console.log(API);
   }, []);
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:3000/user'); // Replace with your API URL
+      const response = await fetch(API +'user'); // Replace with your API URL
       const data = await response.json();
       setUsers(data);
       console.log(users);
@@ -47,10 +50,9 @@ const CheckInOut = () => {
   }
 
   async function getUserCheckStatus(user) {
-    const API = 'http://localhost:3000/inOrOut/' + user;
 
     try {
-      const response = await axios.get(API);
+      const response = await axios.get(API +'inOrOut/'+ user);
       console.log(response.data);
       if (response.data.check == 'In') {
         setiCheckInTime(false);
@@ -83,8 +85,8 @@ const CheckInOut = () => {
       return;
     }
     if (icheckInTime == false) {
-      const API = 'http://localhost:3000/updateCheckIn/' + userId;
-      fetch(API, {
+      const url = API + 'updateCheckIn/' + userId;
+      fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,8 +107,8 @@ const CheckInOut = () => {
         });
     }
     else {
-      const API = 'http://localhost:3000/updateCheckOut/' + userId;
-      fetch(API, {
+      const url = API + 'updateCheckOut/' + userId;
+      fetch(url, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

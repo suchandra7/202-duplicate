@@ -8,13 +8,16 @@ import a2 from '../images/cardio.jpg';
 import a3 from '../images/strength.jpg';
 import a4 from '../images/yoga.jpg';
 import a5 from '../images/zumba.jpg';
+import configData from '../config.json';
 
 function Home() {
     const [membershipPlans,setmembershipPlans] = useState({});
+    const API = configData.API;
+    
 
     async function getMembership(event) {
         try {
-            const response = await axios.get('http://localhost:3000/membershipPlan');
+            const response = await axios.get(API +'membershipPlan');
             setmembershipPlans(response.data);
             console.log(membershipPlans);
         } catch (error) {

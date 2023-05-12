@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
+import configData from '../config.json';
 
 function Register() {
     const { guserID, setguserID } = useContext(AuthContext);
@@ -14,6 +15,7 @@ function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userID, setuserID] = useState('');
+    const API = configData.API;
 
     useEffect(() => {
         if(guserRole == 'Member'){
@@ -50,7 +52,7 @@ function Register() {
         event.preventDefault();
         var user_details = { userId: userID, name: name, email: email, password: password }
         try {
-          const response = await axios.post('http://localhost:3000/addUser', user_details);
+          const response = await axios.post(API +'addUser', user_details);
           setName("");
           setEmail("");
           setPassword("");

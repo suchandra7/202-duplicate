@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import axios from 'axios';
+import configData from '../config.json';
+
 function Enrollusers() {
 
     const [selectedMember, setselectedMember] = useState('Select a member');
@@ -10,10 +12,11 @@ function Enrollusers() {
 
     const { guserRole, setguserRole } = useContext(AuthContext);
     const navigate = useNavigate();
+    const API = configData.API;
 
     async function getMembers() {
         try {
-            const response = await axios.get('http://localhost:3000/getnonmembers');
+            const response = await axios.get(API +'getnonmembers');
             console.log(response.data);
             setMembers(response.data);
             console.log(members);
@@ -54,7 +57,7 @@ function Enrollusers() {
                 alert ("Please select duration");
                 return;
             }
-            const response = await axios.patch('http://localhost:3000/user/updateUserMembership', details);
+            const response = await axios.patch('user/updateUserMembership', details);
             getMembers();
             setselectedMember('Select a member');
             setselectedDuration('Select a duration');

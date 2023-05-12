@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Chart as ChartJS, BarElement, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 import { Bar, Line } from 'react-chartjs-2';
 import axios from 'axios';
+import configData from '../config.json';
 
 ChartJS.register(
     BarElement, CategoryScale, LinearScale, Tooltip, Legend, LineElement, PointElement
@@ -17,6 +18,7 @@ function Hoursspent() {
     const [ total, setTotal ] = useState(0);
     const [ lineData, setLineData ] = useState();
     const [ lineTotal, setlineTotal ] = useState(0);
+    const API = configData.API;
     
 
 
@@ -60,7 +62,7 @@ function Hoursspent() {
 
     async function getHours(location) {
         try {
-            const response = await axios.get('http://localhost:3000/analytics/hoursSpentAtGym/' + location);
+            const response = await axios.get(API +'analytics/hoursSpentAtGym/' + location);
             console.log(response.data);
             const weekData = response.data.slice(-7).reverse();
             setTotal(weekData.reduce((t,c) => t+c));

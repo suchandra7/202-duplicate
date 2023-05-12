@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthProvider';
 import { useNavigate } from "react-router-dom";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js";
+import configData from '../config.json';
 
 ChartJS.register(
     ArcElement,
@@ -17,6 +18,7 @@ function Dashboard() {
     const [selectedLocation, setselectedLocation] = useState('Select a location');
     const [weekData, setweekData] = useState();
     const [total, setTotal] = useState(0);
+    const API = configData.API;
 
 
     const navigate = useNavigate();
@@ -45,7 +47,7 @@ function Dashboard() {
 
     async function getClassEnrollment(location) {
         try {
-            const response = await axios.get('http://localhost:3000/analytics/classEnrollment/' + location);
+            const response = await axios.get(API +'analytics/classEnrollment/' + location);
             console.log(response.data);
             setTotal(response.data.sunday + response.data.monday + response.data.tuesday + response.data.wednesday + response.data.thursday + response.data.friday + response.data.saturday)
             setweekData(

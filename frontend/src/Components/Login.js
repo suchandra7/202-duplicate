@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
+import configData from '../config.json';
 
 function Login() {
     const { guserID, setguserID } = useContext(AuthContext);
@@ -13,6 +14,7 @@ function Login() {
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
     const [userID, setuserID] = useState('');
+    const API = configData.API;
 
     useEffect(() => {
         if (guserRole == 'Member') {
@@ -43,7 +45,7 @@ function Login() {
         event.preventDefault();
         var user_details = { userId: userID, password: password }
         try {
-            const response = await axios.post('http://localhost:3000/user/validate', user_details);
+            const response = await axios.post(API +'user/validate', user_details);
             console.log('login successful!', response.data);
             setguserID(response.data.userId);
             setguserRole(response.data.role);
@@ -62,6 +64,9 @@ function Login() {
                 navigate('/nonmember');
             }
         } catch (error) {
+            alert("Incorrect User ID or Password");
+            setuserID('');
+            setPassword('');
             console.error('login failed!', error.response.data);
         }
     };

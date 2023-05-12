@@ -2,7 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthProvider';
 import { useNavigate } from "react-router-dom";
-const API = 'http://localhost:3000/futureClass/';
+import configData from '../config.json';
+
+const API = configData.API;
+const url = API +'futureClass/';
 
 
 const Schedule = () => {
@@ -35,7 +38,7 @@ const Schedule = () => {
 
     async function fetchUsers() {
         try {
-            fetch(API + guserID)
+            fetch(url + guserID)
                 .then((response) => response.json())
                 .then((json) => {
                     setBookings(json);

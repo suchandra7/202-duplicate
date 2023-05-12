@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
 import axios from 'axios';
+import configData from '../config.json';
 
 function Signupforclass() {
     const [selectedLocation, setselectedLocation] = useState('Select a location');
@@ -9,6 +10,7 @@ function Signupforclass() {
     const { guserID, setguserID } = useContext(AuthContext);
     const [classes, setClasses] = useState([]);
     const [classID, setClassID] = useState('');
+    const API = configData.API;
 
     const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ function Signupforclass() {
     async function getClasses(location) {
         try {
             var req = { userId: guserID, location: location }
-            const response = await axios.post('http://localhost:3000/futureClasses',req);
+            const response = await axios.post(API +'futureClasses',req);
             setClasses(response.data);
             console.log(response.data);
         } catch (error) {
@@ -46,7 +48,7 @@ function Signupforclass() {
         console.log(clickedClassID);
         try {
             var classs = { userId: guserID, classId: clickedClassID }
-            const response = await axios.post('http://localhost:3000/bookClass', classs);
+            const response = await axios.post('bookClass', classs);
             alert('Class booked successfully');
             getClasses(selectedLocation);
         } catch (error) {

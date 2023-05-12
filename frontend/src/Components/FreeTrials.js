@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthProvider';
 import { useNavigate } from "react-router-dom";
+import configData from '../config.json';
 
 
 function FreeTrials() {
@@ -10,6 +11,7 @@ function FreeTrials() {
     const [selectedMember, setselectedMember] = useState('Select a user');
     const [selectedDuration, setselectedDuration] = useState('1');
     const [members, setMembers] = useState([]);
+    const API = configData.API;
 
     const navigate = useNavigate();
 
@@ -33,7 +35,7 @@ function FreeTrials() {
     }
     async function getMembers() {
         try {
-            const response = await axios.get('http://localhost:3000/getnonmembers');
+            const response = await axios.get(API +'getnonmembers');
             console.log(response.data);
             setMembers(response.data);
             console.log(members);
@@ -50,21 +52,21 @@ function FreeTrials() {
     async function enrollMembers(event) {
         try {
             var details = { userId: selectedMember, months: selectedDuration }
-            if(selectedMember=='Select a member' && selectedDuration=="Select a duration"){
-                alert ("Please select member and duration");
+            if(selectedMember=='Select a user' && selectedDuration=="Select a duration"){
+                alert ("Please select user and duration");
                 return;
             }
-            else if (selectedMember=='Select a member'){
-                alert ("Please select a member");
+            else if (selectedMember=='Select a user'){
+                alert ("Please select a user");
                 return;
             }
             else if (selectedDuration=="Select a duration"){
                 alert ("Please select duration");
                 return;
             }
-            const response = await axios.patch('http://localhost:3000/user/updateUserMembership', details);
+            const response = await axios.patch('user/updateUserMembership', details);
             getMembers();
-            setselectedMember('Select a member');
+            setselectedMember('Select a user');
 
         }
         catch (error) {

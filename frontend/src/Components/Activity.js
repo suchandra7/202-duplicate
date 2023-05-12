@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
+import configData from '../config.json';
 
 function Activity() {
   const { guserID, setguserID } = useContext(AuthContext);
@@ -11,6 +12,7 @@ function Activity() {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const navigate = useNavigate();
+  const API = configData.API;
 
   useEffect(() => {
     if (guserRole == '') {
@@ -32,8 +34,8 @@ function Activity() {
         endDate: new Date(endTime),
       };
       if (startTime && endTime){
-      const classes = await axios.post('http://localhost:3000/activityHoursSpent', data);
-      const machine = await axios.post('http://localhost:3000/machineHoursSpent', data);
+      const classes = await axios.post(API +'activityHoursSpent', data);
+      const machine = await axios.post(API + 'machineHoursSpent', data);
       setclassesData(classes.data);
       setmachineData(machine.data);
       console.log(classes.data);

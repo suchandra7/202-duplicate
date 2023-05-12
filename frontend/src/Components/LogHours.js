@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthProvider';
+import configData from '../config.json';
 
 const LogHours = () => {
   const [selectedOption, setSelectedOption] = useState('select Machine');
@@ -8,9 +9,11 @@ const LogHours = () => {
   const [endTime, setEndTime] = useState('');
   const { guserRole, setguserRole } = useContext(AuthContext);
   const { guserID, setguserId } = useContext(AuthContext);
+  const API = configData.API;
+  
 
   const navigate = useNavigate();
-  const API = 'http://localhost:3000/addlogMachineTracking'
+  const url = API +'addlogMachineTracking'
   useEffect(() => {
     if (guserRole == '') {
       navigate('/');
@@ -58,7 +61,7 @@ const LogHours = () => {
     console.log(formData);
 
     // Make a POST request to the backend endpoint
-    fetch(API, {
+    fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
