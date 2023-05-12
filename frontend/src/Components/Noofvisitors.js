@@ -13,7 +13,7 @@ function Noofvisitors() {
     const [barData, setBarData] = useState();
     const [total, setTotal] = useState(0);
     const [weekday, setweekday] = useState();
-    const [date, setDate] = useState();
+    const [date, setDate] = useState('');
 
 
     const navigate = useNavigate();
@@ -44,18 +44,16 @@ function Noofvisitors() {
 
     async function getHours() {
         try {
+            const temp = new Date(date);
+            temp.setHours(temp.getHours()+8);
             const obj = {
-                date: new Date(date),
+                date: temp,
                 location: selectedLocation
             };
             const response = await axios.post('http://localhost:3000/analytics/visitorsPerHours', obj);
-            console.log(response.data);
             const hourData = response.data.slice(0, 24);
             setweekday(response.data[24]);
-            console.log(typeof (weekday));
             setTotal(hourData.reduce((t, c) => t + c));
-            console.log("***********************");
-            console.log(hourData);
             setBarData(
                 {
                     labels: ["Hour 1", "Hour 2", "Hour 3", "Hour 4", "Hour 5", "Hour 6", "Hour 7", "Hour 8", "Hour 9", "Hour 10", "Hour 11", "Hour 12", "Hour 13", "Hour 14", "Hour 15", "Hour 16", "Hour 17", "Hour 18", "Hour 19", "Hour 20", "Hour 21", "Hour 22", "Hour 23", "Hour 24"],
@@ -84,7 +82,7 @@ function Noofvisitors() {
     }
     const handleDateChange = (e) => {
         setDate(e.target.value);
-      };
+    };
 
     const submit = (e) => {
         getHours();
@@ -94,7 +92,7 @@ function Noofvisitors() {
         <div>
             <div className='row center'>
                 <h1>
-                    No of visitors {date}
+                    No of visitors
                 </h1>
             </div>
             <div className='row'>
@@ -102,7 +100,7 @@ function Noofvisitors() {
                     <h3>
                         Date
                     </h3>
-                    <input type="date" value={date} onChange={handleDateChange}/>
+                    <input type="date" value={date} onChange={handleDateChange} />
                     <div className='center side'>
                         <h3>Location</h3>
                         <div class="dropdown" onClick={setValue}>
@@ -123,21 +121,23 @@ function Noofvisitors() {
                 </div>
 
             </div>
-            <div className='row center'>
+            {
+                ((date != '') && (selectedLocation != 'Select a location' ) ? (<div className='row center'>
                 <h1>
                     Selected day is {(weekday ? ('Weekday') : ('Weekend'))}
                 </h1>
-            </div>
-            <div className='row center'>
+            </div>) : (<div className='row center'>
                 <h1>
-                    Selected day is {(weekday ? ('Weekday') : ('Weekend'))}
+                    Please select date, location and submit to view data
                 </h1>
-            </div>
+            </div>) )
+            }
+            
             <div className='row'>
                 <div>
                     {
                         (total != 0 ?
-                            <Bar data={barData} options={options}></Bar> : <h3 className='center'>No of hours is 0 for the selected location and date</h3>)
+                            <Bar data={barData} options={options}></Bar> : <h3 className='center'>No of visitors is 0 for the selected location and date</h3>)
                     }
                 </div>
             </div>
