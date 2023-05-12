@@ -15,15 +15,15 @@ function Login() {
     const [userID, setuserID] = useState('');
 
     useEffect(() => {
-        if(guserRole == 'Member'){
+        if (guserRole == 'Member') {
             console.log('logged in as member');
             navigate('/schedule');
         }
-        else if(guserRole == 'admin'){
+        else if (guserRole == 'admin') {
             console.log('logged in as admin');
             navigate('/enrollusers');
         }
-        else if(guserRole == 'Non Member'){
+        else if (guserRole == 'Non Member') {
             console.log('logged in as Non-member');
             navigate('/nonmember');
         }
@@ -49,15 +49,15 @@ function Login() {
             setguserRole(response.data.role);
             setguserEmail(response.data.email);
             setguserName(response.data.name);
-            if(guserRole == 'Member'){
+            if (guserRole == 'Member') {
                 console.log('logged in as member');
                 navigate('/schedule');
             }
-            else if(guserRole == 'admin'){
+            else if (guserRole == 'admin') {
                 console.log('logged in as admin');
                 navigate('/enrollusers');
             }
-            else if(guserRole == 'Non Member'){
+            else if (guserRole == 'Non Member') {
                 console.log('logged in as Non-member');
                 navigate('/nonmember');
             }
@@ -72,7 +72,7 @@ function Login() {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="exampleInputuserID" className="form-label">User ID </label>
-                        <input type="text" min="4" className="form-control" id="userID" value={userID} onChange={(e) => handleInputChange(e)} required/>
+                        <input type="text"  min="4" className="form-control" id="userID" value={userID} onChange={(e) => handleInputChange(e)} required />
                     </div>
 
                     <div className="mb-3">
@@ -80,7 +80,13 @@ function Login() {
                         <input type="password" min="4" className="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} required/>
                     </div>
 
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <div className="form-group">
+                        <div className="row">
+                            <div className='center side'>
+                                <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Submit</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
                 <div>{guserID}</div>
                 <div>{guserRole}</div>

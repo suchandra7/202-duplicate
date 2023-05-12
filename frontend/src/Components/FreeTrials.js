@@ -50,6 +50,18 @@ function FreeTrials() {
     async function enrollMembers(event) {
         try {
             var details = { userId: selectedMember, months: selectedDuration }
+            if(selectedMember=='Select a member' && selectedDuration=="Select a duration"){
+                alert ("Please select member and duration");
+                return;
+            }
+            else if (selectedMember=='Select a member'){
+                alert ("Please select a member");
+                return;
+            }
+            else if (selectedDuration=="Select a duration"){
+                alert ("Please select duration");
+                return;
+            }
             const response = await axios.patch('http://localhost:3000/user/updateUserMembership', details);
             getMembers();
             setselectedMember('Select a member');

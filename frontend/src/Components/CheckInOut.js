@@ -78,8 +78,8 @@ const CheckInOut = () => {
       checkOutTime: checkOutTime,
     };
     console.log(checkInOutData);
-    if (!userId && (!checkInTime || !checkOutTime)) {
-      alert("Please fill out all fields");
+    if ((!userId || userId=='Select User')) {
+      alert("Please select the user");
       return;
     }
     if (icheckInTime == false) {
@@ -139,7 +139,7 @@ const CheckInOut = () => {
           <div className='center side'>
             <h5 style={{ paddingRight: '48px' }}> User    </h5>
             <div class="dropdown" onClick={setValue}  >
-              <button class="btn btn-secondary dropdown-toggle" style={{ width: '210px' }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" style={{ width: '210px' }} type="button" data-bs-toggle="dropdown" aria-expanded="false"  >
                 {userId}
               </button>
               <ul class="dropdown-menu" >
@@ -165,6 +165,7 @@ const CheckInOut = () => {
               value={checkInTime}
               onChange={handleCheckInTimeChange}
               disabled={icheckInTime}
+              required={!icheckInTime}
             />
           </div>
         </div>
@@ -180,6 +181,7 @@ const CheckInOut = () => {
               value={checkOutTime}
               onChange={handleCheckOutTimeChange}
               disabled={icheckOutTime}
+              required={!icheckOutTime} 
             />
           </div>
         </div>

@@ -42,10 +42,22 @@ function Enrollusers() {
     async function enrollMembers(event) {
         try {
             var details = { userId: selectedMember, months: selectedDuration }
+            if(selectedMember=='Select a member' && selectedDuration=="Select a duration"){
+                alert ("Please select member and duration");
+                return;
+            }
+            else if (selectedMember=='Select a member'){
+                alert ("Please select a member");
+                return;
+            }
+            else if (selectedDuration=="Select a duration"){
+                alert ("Please select duration");
+                return;
+            }
             const response = await axios.patch('http://localhost:3000/user/updateUserMembership', details);
             getMembers();
             setselectedMember('Select a member');
-            setselectedDuration('Select a member');
+            setselectedDuration('Select a duration');
 
         }
         catch (error) {
@@ -72,7 +84,7 @@ function Enrollusers() {
                 <div className='center side'>
                     <h3> Member</h3>
                     <div class="dropdown" onClick={setMember}>
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" required> 
                             {selectedMember}
                         </button>
                         <ul class="dropdown-menu">
@@ -88,7 +100,7 @@ function Enrollusers() {
                 <div className='center side'>
                     <h3>Duration</h3>
                     <div class="dropdown" onClick={setDuration}>
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" required>
                             {selectedDuration}
                         </button>
                         <ul class="dropdown-menu">
