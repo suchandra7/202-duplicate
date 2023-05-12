@@ -48,7 +48,7 @@ function Signupforclass() {
         console.log(clickedClassID);
         try {
             var classs = { userId: guserID, classId: clickedClassID }
-            const response = await axios.post('bookClass', classs);
+            const response = await axios.post(API +'bookClass', classs);
             alert('Class booked successfully');
             getClasses(selectedLocation);
         } catch (error) {
