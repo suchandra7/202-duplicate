@@ -89,10 +89,9 @@ function Dashboard() {
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" >Mountain View</a></li>
-                            <li><a class="dropdown-item" >Sunyvale</a></li>
+                            <li><a class="dropdown-item" >Sunnyvale</a></li>
                             <li><a class="dropdown-item" >Milpitas</a></li>
                             <li><a class="dropdown-item" >San jose</a></li>
-                            <li><a class="dropdown-item" >Santa clara</a></li>
                         </ul>
                     </div>
                 </div>
