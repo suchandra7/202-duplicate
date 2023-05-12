@@ -31,12 +31,17 @@ function Activity() {
         startDate: new Date(startTime),
         endDate: new Date(endTime),
       };
+      if (startTime && endTime){
       const classes = await axios.post('http://localhost:3000/activityHoursSpent', data);
       const machine = await axios.post('http://localhost:3000/machineHoursSpent', data);
       setclassesData(classes.data);
       setmachineData(machine.data);
       console.log(classes.data);
       console.log(machine.data);
+    }
+      else {
+        alert('Please give start and end time');
+      }
     } catch (error) {
       console.error('Error fetching data', error.response.data);
     }
@@ -72,7 +77,7 @@ function Activity() {
         <div className="form-group">
           <div className="row">
             <div className='center side'>
-              <h5>Start Time:</h5>
+              <h5>End Time:</h5>
               <input class="ip2" style={{ width: '250px' }}
                 type="datetime-local"
                 id="endTime"

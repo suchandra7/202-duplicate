@@ -51,7 +51,11 @@ function Register() {
         var user_details = { userId: userID, name: name, email: email, password: password }
         try {
           const response = await axios.post('http://localhost:3000/addUser', user_details);
-          console.log('registeration successful!', response.data);
+          setName("");
+          setEmail("");
+          setPassword("");
+          setuserID("");
+          alert("Registration successful, please login to access the website");
           navigate('/login');
         } catch (error) {
           console.error('registeration failed!', error.response.data);
@@ -67,22 +71,23 @@ function Register() {
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="exampleInputuserID" className="form-label">User ID </label>
-                <input type="text" min="4" className="form-control" id="userID" value={userID} onChange={(e) => handleInputChange(e)} />
+                <input type="text" min="4" className="form-control" id="userID" value={userID} onChange={(e) => handleInputChange(e)} required/>
             </div>
             <div className="mb-3">
                 <label htmlFor="exampleInputName" className="form-label">Full Name</label>
-                <input type="text" min="4" className="form-control" id="name" value={name} onChange={(e) => handleInputChange(e)} />
+                <input type="text" min="4" className="form-control" id="name" value={name} onChange={(e) => handleInputChange(e)} required/>
             </div>
             <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                <input type="email" min="4" className="form-control" id="email" value={email} onChange={(e) => handleInputChange(e)} />
+                <input type="email" min="4" className="form-control" id="email" value={email} onChange={(e) => handleInputChange(e)} required/>
             </div>
             <div className="mb-3">
                 <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                <input type="password" min="4" className="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} />
+                <input type="password" min="4" className="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} required/>
             </div>
-
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <div className='center side'>
+            <button type="submit" class="btn btn-success">Submit</button>
+            </div>
         </form>
           </div>
         </div>

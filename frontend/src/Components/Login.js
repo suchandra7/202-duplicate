@@ -77,7 +77,7 @@ function Login() {
 
                     <div className="mb-3">
                         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                        <input type="password" min="4" className="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} required />
+                        <input type="password" min="4" className="form-control" id="password" value={password} onChange={(e) => handleInputChange(e)} required/>
                     </div>
 
                     <button type="submit" className="btn btn-primary">Submit</button>
