@@ -10,10 +10,10 @@ const LogHours = () => {
   const { guserRole, setguserRole } = useContext(AuthContext);
   const { guserID, setguserId } = useContext(AuthContext);
   const API = configData.API;
-  
+
 
   const navigate = useNavigate();
-  const url = API +'addlogMachineTracking'
+  const url = API + 'addlogMachineTracking'
   useEffect(() => {
     if (guserRole == '') {
       navigate('/');
@@ -52,8 +52,7 @@ const LogHours = () => {
       endTime: new Date(endTime),
     };
 
-    if( !selectedOption || !startTime || !endTime)
-    {
+    if (!selectedOption || !startTime || !endTime) {
       alert("Please fill out all fields");
       return;
     }
@@ -83,65 +82,72 @@ const LogHours = () => {
 
 
   return (
-    <form className="form-container" style={{paddingTop:'50px'}} onSubmit={handleSubmit}>
-      <div className="form-group">
+    <div >
+      <div className='row center'>
+        <h1>Log your machine activity</h1>
+      </div>
+      <form className="form-container" onSubmit={handleSubmit}>
+        <div className="form-group">
 
-        <div className='row'>
-          <div className='center side'>
-            <h5> Machine</h5>
-            <div class="dropdown"  onClick={setValue}>
-              <button class="btn btn-secondary dropdown-toggle" style = {{width:'210px'}} type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {selectedOption}
-              </button>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" >Treadmill</a></li>
-                <li><a class="dropdown-item" >Cross Fit</a></li>
-                <li><a class="dropdown-item" >Cross Ramp</a></li>
-                <li><a class="dropdown-item" >Exercise Bike</a></li>
-                <li><a class="dropdown-item" >Rowing Machine</a></li>
-              </ul>
+          <div className='row'>
+            <div className='center side'>
+              <h5> Machine</h5>
+              <div class="dropdown" onClick={setValue}>
+                <button class="btn btn-secondary dropdown-toggle" style={{ width: '210px' }} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {selectedOption}
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" >Treadmill</a></li>
+                  <li><a class="dropdown-item" >Cross Fit</a></li>
+                  <li><a class="dropdown-item" >Cross Ramp</a></li>
+                  <li><a class="dropdown-item" >Exercise Bike</a></li>
+                  <li><a class="dropdown-item" >Rowing Machine</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div className="form-group">
+          <div className="row">
+            <div className='center side'>
+              <h5>Start Time:</h5>
+              <input class="ip2" style={{ width: '210px' }}
+                type="datetime-local"
+                id="startTime"
+                value={startTime}
+                onChange={handleStartTimeChange}
+              />
             </div>
           </div>
         </div>
 
-      </div>
+        <div className="form-group">
+          <div className="row">
+            <div className='center side'>
+              <h5>Start Time:</h5>
+              <input class="ip2" style={{ width: '210px' }}
+                type="datetime-local"
+                id="endTime"
+                value={endTime}
+                onChange={handleEndTimeChange}
+              />
+            </div>
+          </div>
+        </div>
+        <br></br>
+        <div className="form-group">
+          <div className="row">
+            <div className='center side'>
+              <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
 
-      <div className="form-group">
-      <div className="row">
-        <div className='center side'>
-        <h5>Start Time:</h5>
-        <input class="ip2" style = {{width:'210px'}}
-          type="datetime-local"
-          id="startTime"
-          value={startTime}
-          onChange={handleStartTimeChange}
-        />
-        </div>
-      </div>
-      </div>
 
-      <div className="form-group">
-      <div className="row">
-        <div className='center side'>
-        <h5>Start Time:</h5>
-        <input class="ip2" style = {{width:'210px'}}
-          type="datetime-local"
-          id="endTime"
-          value={endTime}
-          onChange={handleEndTimeChange}
-        />
-        </div>
-        </div>
-      </div>
-      <br></br>
-      <div className="form-group">
-      <div className="row">
-        <div className='center side'>
-      <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Submit</button>
-      </div>
-      </div>
-      </div>
-    </form>
+    </div>
 
   );
 };

@@ -29,7 +29,7 @@ function Signupforclass() {
     async function getClasses(location) {
         try {
             var req = { userId: guserID, location: location }
-            const response = await axios.post(API +'futureClasses',req);
+            const response = await axios.post(API + 'futureClasses', req);
             setClasses(response.data);
             console.log(response.data);
         } catch (error) {
@@ -48,7 +48,7 @@ function Signupforclass() {
         console.log(clickedClassID);
         try {
             var classs = { userId: guserID, classId: clickedClassID }
-            const response = await axios.post(API +'bookClass', classs);
+            const response = await axios.post(API + 'bookClass', classs);
             alert('Class booked successfully');
             getClasses(selectedLocation);
         } catch (error) {
@@ -58,6 +58,9 @@ function Signupforclass() {
 
     return (
         <div>
+            <div className='row center'>
+                <h1>Sign up for our classes</h1>
+            </div>
             <div className='row'>
                 <div className='center side'>
                     <h3>Seleced location</h3>
@@ -77,40 +80,40 @@ function Signupforclass() {
 
             <div className='row'>
                 <div className='col-10 offset-1'>
-                <table class="table">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">Class</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Start Time</th>
-                            <th scope="col">End Time</th>
-                            <th scope="col">Instructor Name</th>
-                            <th scope="col">Book class</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        {
-                            classes.map(x => (
-                                <tr >
-                                    <td>{x.className}</td>
-                                    <td>{(new Date(x.startTime)).toLocaleDateString()}</td>
-                                    <td>{(new Date(x.startTime)).toLocaleTimeString()}</td>
-                                    <td>{(new Date(x.endTime)).toLocaleTimeString()}</td>
-                                    <td>{x.instructor}</td>
-                                    <td>
-                                        {
-                                            (x.booked ? 
-                                        <button type="button" class="btn btn-success" onClick={() => bookClass(x.classId)} disabled>Already booked</button> : 
-                                        <button type="button" class="btn btn-success" onClick={() => bookClass(x.classId)}>Book</button>
-                                        )
-                                        }
-                                        
-                                    </td>
-                                </tr>
-                         ))
-                        }
-                    </tbody>
-                </table>
+                    <table class="table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Class</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">End Time</th>
+                                <th scope="col">Instructor Name</th>
+                                <th scope="col">Book class</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {
+                                classes.map(x => (
+                                    <tr >
+                                        <td>{x.className}</td>
+                                        <td>{(new Date(x.startTime)).toLocaleDateString()}</td>
+                                        <td>{(new Date(x.startTime)).toLocaleTimeString()}</td>
+                                        <td>{(new Date(x.endTime)).toLocaleTimeString()}</td>
+                                        <td>{x.instructor}</td>
+                                        <td>
+                                            {
+                                                (x.booked ?
+                                                    <button type="button" class="btn btn-success" onClick={() => bookClass(x.classId)} disabled>Already booked</button> :
+                                                    <button type="button" class="btn btn-success" onClick={() => bookClass(x.classId)}>Book</button>
+                                                )
+                                            }
+
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -33,14 +33,14 @@ function Activity() {
         startDate: new Date(startTime),
         endDate: new Date(endTime),
       };
-      if (startTime && endTime){
-      const classes = await axios.post(API +'activityHoursSpent', data);
-      const machine = await axios.post(API + 'machineHoursSpent', data);
-      setclassesData(classes.data);
-      setmachineData(machine.data);
-      console.log(classes.data);
-      console.log(machine.data);
-    }
+      if (startTime && endTime) {
+        const classes = await axios.post(API + 'activityHoursSpent', data);
+        const machine = await axios.post(API + 'machineHoursSpent', data);
+        setclassesData(classes.data);
+        setmachineData(machine.data);
+        console.log(classes.data);
+        console.log(machine.data);
+      }
       else {
         alert('Please give start and end time');
       }
@@ -61,6 +61,11 @@ function Activity() {
 
   return (
     <div>
+      <div className='row center'>
+        <h1>
+          Select start/end time and submit to view data
+        </h1>
+      </div>
       <div>
         <div className="form-group">
           <div className="row">

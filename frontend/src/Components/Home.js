@@ -100,7 +100,7 @@ function Home() {
                         <img src={a1} class="card-img-bottom" alt="..." />
                         <div class="card-body">
                             <h5 class="card-title">Boxing</h5>
-                            <p class="card-text">Best boxing class in town</p>
+                            <p class="card-text">Unleash your inner fighter and get a knockout workout with our boxing class!</p>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@ function Home() {
                         <img src={a2} class="card-img-bottom" alt="..." />
                         <div class="card-body">
                             <h5 class="card-title">Cardio</h5>
-                            <p class="card-text">Best boxing class in town</p>
+                            <p class="card-text">Join our cardio class to boost your heart health and improve your fitness level!</p>
                         </div>
                     </div>
                 </div>
@@ -117,8 +117,8 @@ function Home() {
                     <div class="card actvity">
                         <img src={a3} class="card-img-bottom" alt="..." />
                         <div class="card-body">
-                            <h5 class="card-title">Strength</h5>
-                            <p class="card-text">Best boxing class in town</p>
+                            <h5 class="card-title">Strength </h5>
+                            <p class="card-text">Sculpt muscles and build strength with our Strength training class!</p>
                         </div>
                     </div>
                 </div>
@@ -127,7 +127,7 @@ function Home() {
                         <img src={a4} class="card-img-bottom" alt="..." />
                         <div class="card-body">
                             <h5 class="card-title">Yoga</h5>
-                            <p class="card-text">Best boxing class in town</p>
+                            <p class="card-text">Find balance and improve flexibility with our rejuvenating yoga class!</p>
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,7 @@ function Home() {
                         <img src={a5} class="card-img-bottom" alt="..." />
                         <div class="card-body">
                             <h5 class="card-title">Zumba</h5>
-                            <p class="card-text">Best boxing class in town</p>
+                            <p class="card-text">Get ready to dance your way to fitness and have fun with our lively Zumba class!</p>
                         </div>
                     </div>
                 </div>
