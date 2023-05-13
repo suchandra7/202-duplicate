@@ -85,12 +85,14 @@ const CheckInOut = () => {
       return;
     }
     if (icheckInTime == false) {
-      const url = API + 'updateCheckIn/' + userId;
+      var obj = { userId: userId, location: 'San jose' }
+      const url = API + 'updateCheckIn/';
       fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
+        body: JSON.stringify(obj),
       })
         .then((response) => response.json())
         .then((data) => {
